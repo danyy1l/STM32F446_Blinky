@@ -1,0 +1,175 @@
+
+Discarded input sections
+
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccFeCMDk.o
+ .text          0x0000000000000000        0x0 /tmp/ccFeCMDk.o
+ .data          0x0000000000000000        0x0 /tmp/ccFeCMDk.o
+ .bss           0x0000000000000000        0x0 /tmp/ccFeCMDk.o
+ .group         0x0000000000000000        0xc /tmp/ccICJlam.o
+ .group         0x0000000000000000        0xc /tmp/ccICJlam.o
+ .group         0x0000000000000000        0xc /tmp/ccICJlam.o
+ .group         0x0000000000000000        0xc /tmp/ccICJlam.o
+ .group         0x0000000000000000        0xc /tmp/ccICJlam.o
+ .group         0x0000000000000000        0xc /tmp/ccICJlam.o
+ .group         0x0000000000000000        0xc /tmp/ccICJlam.o
+ .text          0x0000000000000000        0x0 /tmp/ccICJlam.o
+ .data          0x0000000000000000        0x0 /tmp/ccICJlam.o
+ .bss           0x0000000000000000        0x0 /tmp/ccICJlam.o
+ .debug_macro   0x0000000000000000      0xa9c /tmp/ccICJlam.o
+ .debug_macro   0x0000000000000000       0x22 /tmp/ccICJlam.o
+ .debug_macro   0x0000000000000000       0x8e /tmp/ccICJlam.o
+ .debug_macro   0x0000000000000000       0x51 /tmp/ccICJlam.o
+ .debug_macro   0x0000000000000000       0xef /tmp/ccICJlam.o
+ .debug_macro   0x0000000000000000       0x6a /tmp/ccICJlam.o
+ .debug_macro   0x0000000000000000      0x1df /tmp/ccICJlam.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000008000000 0x0000000000080000 xr
+RAM              0x0000000020000000 0x0000000000020000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD /tmp/ccFeCMDk.o
+LOAD /tmp/ccICJlam.o
+LOAD /usr/lib/gcc/arm-none-eabi/9.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a
+LOAD /usr/lib/gcc/arm-none-eabi/9.3.0/thumb/v7e-m+fp/hard/libgcc.a
+                0x0000000020020000                _estack = (ORIGIN (RAM) + LENGTH (RAM))
+
+.vectors        0x0000000008000000      0x1c4
+                0x0000000008000000                . = ALIGN (0x4)
+ *(.vectors)
+ .vectors       0x0000000008000000      0x1c4 /tmp/ccICJlam.o
+                0x0000000008000000                tab
+
+.text           0x00000000080001c4      0x134
+                0x00000000080001c4                . = ALIGN (0x4)
+ *(.text*)
+ .text.startup.main
+                0x00000000080001c4       0xf4 /tmp/ccFeCMDk.o
+                0x00000000080001c4                main
+ .text._reset   0x00000000080002b8       0x40 /tmp/ccICJlam.o
+                0x00000000080002b8                _reset
+
+.glue_7         0x00000000080002f8        0x0
+ .glue_7        0x00000000080002f8        0x0 linker stubs
+
+.glue_7t        0x00000000080002f8        0x0
+ .glue_7t       0x00000000080002f8        0x0 linker stubs
+
+.vfp11_veneer   0x00000000080002f8        0x0
+ .vfp11_veneer  0x00000000080002f8        0x0 linker stubs
+
+.v4_bx          0x00000000080002f8        0x0
+ .v4_bx         0x00000000080002f8        0x0 linker stubs
+
+.iplt           0x00000000080002f8        0x0
+ .iplt          0x00000000080002f8        0x0 /tmp/ccFeCMDk.o
+
+.rel.dyn        0x00000000080002f8        0x0
+ .rel.iplt      0x00000000080002f8        0x0 /tmp/ccFeCMDk.o
+
+.rodata         0x00000000080002f8        0x0
+                0x00000000080002f8                . = ALIGN (0x4)
+ *(.rodata*)
+
+.data           0x0000000020000000        0x0 load address 0x00000000080002f8
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                _sdata = .
+ *(.first_data)
+ *(.data SORT_BY_NAME(.data.*))
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                _edata = .
+                0x00000000080002f8                _sidata = LOADADDR (.data)
+
+.igot.plt       0x0000000020000000        0x0 load address 0x00000000080002f8
+ .igot.plt      0x0000000020000000        0x0 /tmp/ccFeCMDk.o
+
+.bss            0x0000000020000000        0x0 load address 0x00000000080002f8
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                _sbss = .
+ *(.bss SORT_BY_NAME(.bss.*) COMMON)
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                _ebss = .
+OUTPUT(firmware.elf elf32-littlearm)
+
+.debug_info     0x0000000000000000      0x5e4
+ .debug_info    0x0000000000000000      0x46b /tmp/ccFeCMDk.o
+ .debug_info    0x000000000000046b      0x179 /tmp/ccICJlam.o
+
+.debug_abbrev   0x0000000000000000      0x204
+ .debug_abbrev  0x0000000000000000      0x11f /tmp/ccFeCMDk.o
+ .debug_abbrev  0x000000000000011f       0xe5 /tmp/ccICJlam.o
+
+.debug_loc      0x0000000000000000      0x142
+ .debug_loc     0x0000000000000000       0x88 /tmp/ccFeCMDk.o
+ .debug_loc     0x0000000000000088       0xba /tmp/ccICJlam.o
+
+.debug_aranges  0x0000000000000000       0x40
+ .debug_aranges
+                0x0000000000000000       0x20 /tmp/ccFeCMDk.o
+ .debug_aranges
+                0x0000000000000020       0x20 /tmp/ccICJlam.o
+
+.debug_ranges   0x0000000000000000       0x50
+ .debug_ranges  0x0000000000000000       0x10 /tmp/ccFeCMDk.o
+ .debug_ranges  0x0000000000000010       0x40 /tmp/ccICJlam.o
+
+.debug_macro    0x0000000000000000    0x189ec
+ .debug_macro   0x0000000000000000       0xbf /tmp/ccFeCMDk.o
+ .debug_macro   0x00000000000000bf      0xa9c /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000b5b       0x28 /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000b83       0x22 /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000ba5       0x8e /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000c33       0x51 /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000c84       0xef /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000d73       0x6a /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000ddd      0x1df /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000fbc       0x1c /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000fd8       0x22 /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000000ffa      0x101 /tmp/ccFeCMDk.o
+ .debug_macro   0x00000000000010fb     0x1011 /tmp/ccFeCMDk.o
+ .debug_macro   0x000000000000210c      0x11f /tmp/ccFeCMDk.o
+ .debug_macro   0x000000000000222b    0x1675e /tmp/ccFeCMDk.o
+ .debug_macro   0x0000000000018989       0x63 /tmp/ccICJlam.o
+
+.debug_line     0x0000000000000000      0x481
+ .debug_line    0x0000000000000000      0x2d5 /tmp/ccFeCMDk.o
+ .debug_line    0x00000000000002d5      0x1ac /tmp/ccICJlam.o
+
+.debug_str      0x0000000000000000    0x8a9f5
+ .debug_str     0x0000000000000000    0x8a9be /tmp/ccFeCMDk.o
+                                      0x8ab50 (size before relaxing)
+ .debug_str     0x000000000008a9be       0x37 /tmp/ccICJlam.o
+                                       0x3cb4 (size before relaxing)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 /tmp/ccFeCMDk.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 /tmp/ccICJlam.o
+
+.ARM.attributes
+                0x0000000000000000       0x34
+ .ARM.attributes
+                0x0000000000000000       0x34 /tmp/ccFeCMDk.o
+ .ARM.attributes
+                0x0000000000000034       0x34 /tmp/ccICJlam.o
+
+.debug_frame    0x0000000000000000       0x54
+ .debug_frame   0x0000000000000000       0x34 /tmp/ccFeCMDk.o
+ .debug_frame   0x0000000000000034       0x20 /tmp/ccICJlam.o
