@@ -1,11 +1,9 @@
 # STM32F446 Blinky
----
 
 A bare-metal blinky implementation for the STM32 Nucleo-F446RE dev kit, as a beginner project to dive into embedded systems.
 
 
 # Memory and registers
----
 
 First, we need to consult the Reference Manual for the MCU (RM0390). As seen in section 2.3, Table 3, the MCU has 128kB for RAM and 512kB for flash memory (ROM).
 As seen in the table, the RAM section begins at 0x20000000 and flash at 0x08000000.
@@ -17,7 +15,6 @@ To know the registers we have to modify, we need to consult the Reference Manual
 This is important because from the User Manual (UM1724 section 7.6) we learn that the User LD2 corresponds to I/O PA5 (pin 21), meaning it is located in GPIO port A.
 
 # MCU boot and vector table
----
 
 When the ARM MCU boots it has to read the "vector table" at the beginning of flash memory. The vector table is an array of 32-bit addresses of interrupt handlers, where first 16 entries are reserved and common to all ARM MCUs. The rest are specific to the MCU, as they are interrupt handlers for peripherals. 
 
@@ -28,7 +25,6 @@ Every entry in the vector table contains the address of an interrupt handler, i.
 Therefore, we need to make sure the firmware is composed in a way that the second 32-bit value in the ROM contains the address of the boot function.
 
 # Firmware test
----
 
 Now, we can create a main file, that specifies our boot function, which will initially do nothing (infinite loop), and specify a vector table containing 16 standard entries and 91 board-specific entries.
 
@@ -146,7 +142,6 @@ Lastly, for the .bss section:
 As earlier, we declare the bss section start and assign the address to the symbol _sbss. Same as earlier, we take every symbol named .bss or any variation in the form .bss* and write them in this area. The COMMON keyword also adds the special section COMMON that the compiler creates if any different files declare a variable with the same name. Finally, we save the final address in _ebss and reserve its space in RAM, therefore this section will not be in our .bin file.
 
 # Startup script
----
 
 Now, we need a software routine that executes immediately after a Reset in our MCU. The reason we need it is to initialize our CRT and meet the hardware architecture specifications. So, our startup code will need to write the value of the stack pointer to the first 32-bit word in the address 0x00000000 (mapped to flash 0x08000000) and the second word to have the address of the Reset_Handler.
 
@@ -191,6 +186,5 @@ Next, we initialize the sections as required by architecture ARM Cortex-M. The .
 Lastly, we create the vector table, making sure that the first entry is the stack pointer (SP) and the second the Reset_Handler.
 
 # Blinky
----
 
 

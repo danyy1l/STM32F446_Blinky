@@ -28,4 +28,3 @@ SECTIONS {
     *(.bss SORT(.bss.*) COMMON)
     _ebss = .;  /* .bss section end */
   } > RAM
-}
