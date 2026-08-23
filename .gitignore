@@ -1,0 +1,7 @@
+.gitignore
+
+**/*.elf
+**/*.map
+**/*.bin
+**/*.o
+

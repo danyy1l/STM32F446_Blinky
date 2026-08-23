@@ -1,9 +1,9 @@
 # STM32F446 Blinky
 
-A bare-metal blinky implementation for the STM32 Nucleo-F446RE dev kit, as a beginner project to dive into embedded systems.
+A bare-metal blinky implementation for the STM32 Nucleo-F446RE dev kit. A beginner project to dive into embedded systems.
 
 
-# Memory and registers
+## Memory and registers
 
 First, we need to consult the Reference Manual for the MCU (RM0390). As seen in section 2.3, Table 3, the MCU has 128kB for RAM and 512kB for flash memory (ROM).
 As seen in the table, the RAM section begins at 0x20000000 and flash at 0x08000000.
@@ -14,7 +14,7 @@ To know the registers we have to modify, we need to consult the Reference Manual
 
 This is important because from the User Manual (UM1724 section 7.6) we learn that the User LD2 corresponds to I/O PA5 (pin 21), meaning it is located in GPIO port A.
 
-# MCU boot and vector table
+## MCU boot and vector table
 
 When the ARM MCU boots it has to read the "vector table" at the beginning of flash memory. The vector table is an array of 32-bit addresses of interrupt handlers, where first 16 entries are reserved and common to all ARM MCUs. The rest are specific to the MCU, as they are interrupt handlers for peripherals. 
 
@@ -24,7 +24,7 @@ Every entry in the vector table contains the address of an interrupt handler, i.
 
 Therefore, we need to make sure the firmware is composed in a way that the second 32-bit value in the ROM contains the address of the boot function.
 
-# Firmware test
+## Firmware test
 
 Now, we can create a main file, that specifies our boot function, which will initially do nothing (infinite loop), and specify a vector table containing 16 standard entries and 91 board-specific entries.
 
@@ -45,7 +45,7 @@ Here _reset() is the reset handler. The `void (*const tab[16 + 97])(void)` expre
 
 The vector table defined with this is put in a section called .vectors, that we will tell in the linker script to be put at the beginning of the firmware, i.e at the beginning of the flash memory.
 
-## Compilation
+### Compilation
 
 Compiling this code with the following command:
 
@@ -141,7 +141,7 @@ Lastly, for the .bss section:
 
 As earlier, we declare the bss section start and assign the address to the symbol _sbss. Same as earlier, we take every symbol named .bss or any variation in the form .bss* and write them in this area. The COMMON keyword also adds the special section COMMON that the compiler creates if any different files declare a variable with the same name. Finally, we save the final address in _ebss and reserve its space in RAM, therefore this section will not be in our .bin file.
 
-# Startup script
+## Startup script
 
 Now, we need a software routine that executes immediately after a Reset in our MCU. The reason we need it is to initialize our CRT and meet the hardware architecture specifications. So, our startup code will need to write the value of the stack pointer to the first 32-bit word in the address 0x00000000 (mapped to flash 0x08000000) and the second word to have the address of the Reset_Handler.
 
@@ -187,4 +187,66 @@ Lastly, we create the vector table, making sure that the first entry is the stac
 
 # Blinky
 
+After all this setup, we can finally begin to write our main function. First, I have used the provided libraries by ST Microelectronics, found in Inc/. Once this is done, we will write our own bare-metal library with custom structs, macros and bit handling functions.
 
+First, we need to know where the LED is located in the board. User Manual (UM1724) section 7.6 tells us: "User LD2: the green LED is a user LED connected to ARDUINO® signal D13 corresponding to STM32 I/O PA5 (pin 21)". Therefore, we know know that we need to access GPIO port A, pin 5.
+
+The following steps are:
+ * Enabling the clock for this port.
+ * Setting the initial state of the pin.
+ * Defining its direction (Input or Output).
+ * Configuring the output type (Push-Pull or Drain).
+ * Configuring port output speed register (Unnecessary for this project).
+ * Configuring pull-up/pull-down register (Unnecessary for this project).
+
+For the LD2 pin we write this code:
+```
+  RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Enable clock for PORT A
+  GPIOA->MODER &= ~GPIO_MODER_MODE5; // Clear mode bits
+  GPIOA->MODER |= GPIO_MODER_MODE5_0; // Activate bit 0, as 01 is output mode for moder
+  GPIOA->OTYPER &= ~GPIO_OTYPER_OT5; // Ensure port is in push-pull state instead of open drain
+  GPIOA->OSPEEDR &= ~GPIO_OSPEEDER_OSPEEDR5; // Clear speed bits to set starting low speed
+```
+
+Now, we can begin to write the main loop. The functionality is basic: toggle the register output value between 1 and 0, and between each toggle, delay the clock so the blink is noticeable.
+
+```
+while(1){
+  volatile uint32_t count = 1000000;
+
+  GPIOA->ODR ^= GPIO_ODR_OD5;
+
+  while(count--) {} 
+}
+
+return 0; // Needed because of main function 'int' signature
+```
+
+That's it! Our main program now compile without problems and when flashed to the board, the LED will blink.
+
+With the following Makefile grabbed from the guide repository:
+```
+CFLAGS  ?=  -W -Wall -Wextra -Werror -Wundef -Wshadow -Wdouble-promotion \
+            -Wformat-truncation -fno-common -Wconversion \
+            -g3 -Os -ffunction-sections -fdata-sections -IInc \
+            -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 $(EXTRA_CFLAGS)
+
+LDFLAGS ?= -TLinkerScript_STM32_NUCLEO-F446RE.ld -nostartfiles -nostdlib --specs nano.specs -lc -lgcc -Wl,--gc-sections -Wl,-Map=$@.map
+
+SOURCES = Src/main.c Src/startup.c
+
+all: firmware.bin
+
+build: firmware.elf
+
+firmware.elf: $(SOURCES)
+	arm-none-eabi-gcc $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $@
+
+firmware.bin: firmware.elf
+	arm-none-eabi-objcopy -O binary $< $@
+
+flash: firmware.bin
+	st-flash --reset write $< 0x08000000
+```
+
+And finally the Blinky is complete!
