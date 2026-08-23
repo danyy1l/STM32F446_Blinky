@@ -250,3 +250,13 @@ flash: firmware.bin
 ```
 
 And finally the Blinky is complete!
+
+## References
+
+This project was built from the ground up by studying microcontroller architecture, official documentation, and community resources. The following materials were instrumental in understanding the bare-metal boot process, memory mapping, and safe register manipulation:
+
+*   **[STM32F446xx Reference Manual (RM0390)](https://www.st.com/resource/en/reference_manual/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf):** The ultimate source of truth for the microcontroller's memory map, boot configuration (Section 2.3), and GPIO register specifications.
+*   **[CMSIS Device Headers (STM32F4)](https://github.com/STMicroelectronics/cmsis-device-f4/tree/master/Include):** Official hardware abstraction headers (`stm32f446xx.h`) provided by STMicroelectronics, used to implement safe bitmasking (Read-Modify-Write patterns).
+*   **[Bare Metal Programming Guide by cpq](https://github.com/cpq/bare-metal-programming-guide):** An excellent and comprehensive repository detailing the bare-metal toolchain, linker scripts, and startup code fundamentals.
+*   **[Bare Metal Blink on STM32 by J. Chisholm](https://jchisholm204.github.io/posts/baremetal_blink/):** A practical tutorial that served as a reference for structuring the initial minimal bare-metal implementation.
+*   **[ARM GCC Toolchain Documentation](https://gcc.gnu.org/onlinedocs/gcc/ARM-Options.html):** Used to understand compiler flags (`-ffunction-sections`, `-nostartfiles`, `-mfloat-abi`) and linker behavior for embedded systems.
