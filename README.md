@@ -8,7 +8,7 @@ As a last comment, I have implemented a very simple FSM for controlling the spee
 
 As in the regular blinky, we begin by configuring the clock and the GPIO registers.
 
-```
+```c
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Enable clock for PORT A
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN; // Enable clock for PORT C
 
@@ -28,13 +28,13 @@ As in the regular blinky, we begin by configuring the clock and the GPIO registe
 
 Next, for the switch pattern we will need an enumeration, through which we can link each state to a value of the enum.
 
-```
+```c
 typedef enum { VERY_SLOW = 0, SLOW, MEDIUM, FAST, TURBO } Blink_Speed;
 ```
 
 Now we can begin implementing the functionality. Basically, what we need to do is constantly read if the user button has been pressed. If it has not been pressed, the blinking continues at the same rate (controlled by a delay variable); if it has, we will need to vary the tick delay, using the switch statement that sets its value:
 
-```
+```c
   Blink_Speed current_speed = VERY_SLOW;
   volatile uint32_t count = 1000000U;
   volatile uint8_t button_pressed = 0;
