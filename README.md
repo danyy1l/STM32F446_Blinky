@@ -28,7 +28,7 @@ Therefore, we need to make sure the firmware is composed in a way that the secon
 
 Now, we can create a main file, that specifies our boot function, which will initially do nothing (infinite loop), and specify a vector table containing 16 standard entries and 91 board-specific entries.
 
-```
+```c
 //Startup code
 __attribute__((naked, noreturn)) void _reset(void){
     for(;;) (void) 0;
@@ -49,13 +49,13 @@ The vector table defined with this is put in a section called .vectors, that we 
 
 Compiling this code with the following command:
 
-```
+```bash
 $ arm-none-eabi-gcc -mcpu=cortex-m4 main.c -c
 ```
 
 We obtain an object file `main.o`, containing the minimal firmware. If we run the `objdump` command we will see the sections contained:
 
-```
+```bash
 $ arm-none-eabi-objdump -h main.o
 
 main.o:     file format elf32-littlearm
@@ -81,13 +81,13 @@ As seen in the result, the VMA/LMA addresses are set to 0, meaning our object fi
 The section .text contains firmware code, right now, the _reset() function. There are also an empty .data and .bss sections. The firmware will be copied to flash, but the data section should reside in RAM. Therefore _reset() must copy the contents of .data to RAM, and also write zeroes to the whole .bss section
 When compiling firmware, the output is an ELF file with sections: .text, .data, .rodata, .bss and others. The linker script maps ELF sections to different memory regions of the microcontroller, basically defining the firmware memory layout. We make the following script:
 
-```
+```bash
 ENTRY(_reset):
 ```
 
 This line tells the linker the value of the entry point in the ELF header, basically a duplicate of what a vector table has. This is an aid for debuggers to set a breakpoint at the beginning.
 
-```
+```bash
 MEMORY {
   /* f446 memory mapping */
   FLASH(rx) : ORIGIN = 0x08000000, LENGTH = 512K
@@ -97,13 +97,13 @@ MEMORY {
 
 This tells the linker the memory sections in the address space, their addresses and length.
 
-```
+```bash
 _estack = ORIGIN(RAM) + LENGTH(RAM);
 ```
 
 This creates a symbol _estack (end stack) with value at the very end of the RAM. As the stack grows downwards, this is our initial stack value.
 
-```
+```bash
 .vectors  : { KEEP(*(.vectors)) } > FLASH
   .text     : { *(.text*) }         > FLASH
   .rodata   : { *(.rodata*) }       > FLASH
@@ -113,7 +113,7 @@ This lines tell the linker to put vectors table on flash first, followed by text
 
 Next, we tell the linker the instructions for .data and .bss sections.
 
-```
+```bash
 .data     : {
     _sdata = .; /* .data section start */
     *(.first_data)
@@ -131,7 +131,7 @@ Lastly, `_sidata = LOADARR(.data)` calculates the physical address in flash of t
 
 Lastly, for the .bss section:
 
-```
+```bash
 .bss      : {
     _sbss = .;  /* .bss section start */
     *(.bss SORT(.bss.*) COMMON)
@@ -147,7 +147,7 @@ Now, we need a software routine that executes immediately after a Reset in our M
 
 It will also need to copy the .data section to SRAM (VMA) to allow read/write operations and to zero-fill the .bss section. For this, we rename our main.c file to startup.c and make slight changes.
 
-```
+```c
 /* Import of Linker Script symbols */
 extern long _sbss, _ebss, _sdata, _edata, _sidata;
 
@@ -200,7 +200,7 @@ The following steps are:
  * Configuring pull-up/pull-down register (Unnecessary for this project).
 
 For the LD2 pin we write this code:
-```
+```c
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Enable clock for PORT A
   GPIOA->MODER &= ~GPIO_MODER_MODE5; // Clear mode bits
   GPIOA->MODER |= GPIO_MODER_MODE5_0; // Activate bit 0, as 01 is output mode for moder
@@ -210,7 +210,7 @@ For the LD2 pin we write this code:
 
 Now, we can begin to write the main loop. The functionality is basic: toggle the register output value between 1 and 0, and between each toggle, delay the clock so the blink is noticeable.
 
-```
+```c
 while(1){
   volatile uint32_t count = 1000000;
 
@@ -225,7 +225,7 @@ return 0; // Needed because of main function 'int' signature
 That's it! Our main program now compile without problems and when flashed to the board, the LED will blink.
 
 With the following Makefile grabbed from the guide repository:
-```
+```bash
 CFLAGS  ?=  -W -Wall -Wextra -Werror -Wundef -Wshadow -Wdouble-promotion \
             -Wformat-truncation -fno-common -Wconversion \
             -g3 -Os -ffunction-sections -fdata-sections -IInc \
