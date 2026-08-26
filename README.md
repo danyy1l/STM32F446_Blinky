@@ -1,84 +1,107 @@
-# STM32F446 Button Controlled Blinky
+# STM32F446 Custom HAL Blinky
 
-After implementing the regular Blinky project, I decided to make a simple extension. The blinking speed (or code written delay) should now be controlled by the pressing of the user button, so each time the button is pressed, the blinking would go faster, until a certain point, where it would reset to the default speed.
+After experimenting with GPIO and its registers, the logical step up to this project is to create our own custom HAL for handling the memory addresses. As a first step, we can basically delete the contents of the Inc/ folder, as we will be creating our own header file. Next, we can begin writing our header file. In a new `my_stm32f446xx.h` file, we begin to write some code.
 
-For this extension, we now need not only the LD2 pin, but also the GPIO pin linked to the user button.
+Having implemented the blinky with the HAL provided by ST Microelectronics, we know a couple of our needs:
 
-As a last comment, I have implemented a very simple FSM for controlling the speed, implementing it with the switch pattern.
+* RCC struct
+* GPIOx struct (one for each GPIO port A-H)
+* Base addresses for each struct
+* Pin handling functions (GPIO_write_pin for example)
 
-As in the regular blinky, we begin by configuring the clock and the GPIO registers.
-
-```c
-  RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Enable clock for PORT A
-  RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN; // Enable clock for PORT C
-
-  GPIOA->MODER &= ~GPIO_MODER_MODE5; // Clear mode bits
-  GPIOA->MODER |=
-      GPIO_MODER_MODE5_0; // Activate bit 0, as 01 is output mode for moder
-  GPIOA->OTYPER &= ~GPIO_OTYPER_OT5; // Ensure port is in push-pull state
-                                     // instead of open drain
-  GPIOA->OSPEEDR &=
-      ~GPIO_OSPEEDER_OSPEEDR5; // Clear speed bits to set starting low speed
-
-  GPIOC->MODER &= ~GPIO_MODER_MODE13;
-  GPIOC->OTYPER &= ~GPIO_OTYPER_OT13;
-  GPIOC->OSPEEDR &=
-      ~GPIO_OSPEEDER_OSPEEDR13; // Clear speed bits to set starting low speed
-```
-
-Next, for the switch pattern we will need an enumeration, through which we can link each state to a value of the enum.
+So, I begin writing a general code structure:
 
 ```c
-typedef enum { VERY_SLOW = 0, SLOW, MEDIUM, FAST, TURBO } Blink_Speed;
+#define __I volatile const /**< Defines read permission */
+#define __IO volatile      /**< Defines read / write permissions */
+#define __O volatile       /**< Defines write permission */
+
+typedef struct {
+
+} RCC_typedef;
+
+#define RCC_BASE 0x00000000
+
+#define RCC (RCC_typedef *)RCC_BASE
+
+typedef struct {
+
+} GPIO_typedef;
+
+#define GPIOA_BASE 0x00000000
+#define GPIOB_BASE 0x00000000
+#define GPIOC_BASE 0x00000000
+#define GPIOD_BASE 0x00000000
+#define GPIOE_BASE 0x00000000
+#define GPIOF_BASE 0x00000000
+#define GPIOG_BASE 0x00000000
+#define GPIOH_BASE 0x00000000
+
+#define GPIOA (GPIO_typedef *)GPIOA_BASE
+#define GPIOB (GPIO_typedef *)GPIOB_BASE
+#define GPIOC (GPIO_typedef *)GPIOC_BASE
+#define GPIOD (GPIO_typedef *)GPIOD_BASE
+#define GPIOE (GPIO_typedef *)GPIOE_BASE
+#define GPIOF (GPIO_typedef *)GPIOF_BASE
+#define GPIOG (GPIO_typedef *)GPIOG_BASE
+#define GPIOH (GPIO_typedef *)GPIOH_BASE
 ```
 
-Now we can begin implementing the functionality. Basically, what we need to do is constantly read if the user button has been pressed. If it has not been pressed, the blinking continues at the same rate (controlled by a delay variable); if it has, we will need to vary the tick delay, using the switch statement that sets its value:
+Next, we need to fill the struct with all the registers indicated by the Reference Manual (RM0390). For example, this would be the RCC struct.
 
 ```c
-  Blink_Speed current_speed = VERY_SLOW;
-  volatile uint32_t count = 1000000U;
-  volatile uint8_t button_pressed = 0;
-  uint32_t ticks = 0;
-
-  while (1) {
-    if ((GPIOC->IDR & GPIO_IDR_ID13) == 0) {
-      if (button_pressed == 0) {
-        button_pressed = 1;
-
-        ++current_speed;
-        if (current_speed > TURBO)
-          current_speed = VERY_SLOW;
-
-        switch (current_speed) {
-        case VERY_SLOW:
-          count = 1000000U;
-          break;
-        case SLOW:
-          count = 500000U;
-          break;
-        case MEDIUM:
-          count = 250000U;
-          break;
-        case FAST:
-          count = 125000U;
-          break;
-        case TURBO:
-          count = 50000U;
-          break;
-        }
-      }
-    } else {
-      button_pressed = 0;
-    }
-
-    ++ticks;
-    if (ticks >= count) {
-      GPIOA->ODR ^= GPIO_ODR_OD5;
-      ticks = 0;
-    }
-  }
+typedef struct {
+  __IO uint32_t CR;
+  __IO uint32_t PLLCFGR;
+  __IO uint32_t CFGR;
+  __IO uint32_t CIR;
+  __IO uint32_t AHB1RSTR;
+  __IO uint32_t AHB2RSTR;
+  __IO uint32_t AHB3RSTR;
+  uint32_t RESERVED0;
+  __IO uint32_t APB1RSTR;
+  __IO uint32_t APB2RSTR;
+  uint32_t RESERVED1[2];
+  __IO uint32_t AHB1ENR;
+  __IO uint32_t AHB2ENR;
+  __IO uint32_t AHB3ENR;
+  uint32_t RESERVED2;
+  __IO uint32_t APB1ENR;
+  __IO uint32_t APB2ENR;
+  uint32_t RESERVED3[2];
+  __IO uint32_t AHB1LPENR;
+  __IO uint32_t AHB2LPENR;
+  __IO uint32_t AHB3LPENR;
+  uint32_t RESERVED4;
+  __IO uint32_t APB1LPENR;
+  __IO uint32_t APB2LPENR;
+  uint32_t RESERVED5[2];
+  __IO uint32_t BDCR;
+  __IO uint32_t CSR;
+  uint32_t RESERVED6[2];
+  __IO uint32_t SSCGR;
+  __IO uint32_t RRC_PLLI2SCFGR;
+  __IO uint32_t RRC_PLLSAICFGR;
+  __IO uint32_t DCKCFGR;
+  __IO uint32_t CKGATENR;
+  __IO uint32_t DCKCFGR2;
+} RCC_typedef;
 ```
 
-Lastly, we can flash the firmware into the board and verify it works correctly. As a final comment, the blinking has been implemented using the tick variable and blinking after the tick counter has passed. This has been the main choice because if it has been done with any kind of loop (for example `while(count--){}`) it would have caused a busy wait (spin waiting), therefore not reading the button presses while active.
+Once filled the structs, we need to map their macros to the corresponding memory addresses. We can get the memory addresses from Section 2.2.2 Table 1. STM32F446xx register boundary addresses:
 
-As a future extension, the button press should trigger a hardware interrupt, and the speed change could be implemented into the IRQ handler. This will be done after further learning of the NVIC.
+![STM32F446xx register boundary addresses][assets/RCC_GPIO_mem.png]
+
+Next, we have to create macros for the bits for each corresponding register. We will follow the same pattern as the manufacturer, where we create a position macro, representing which bit in the register we are addressing, a mask macro, where we shift the value to its desired position in the register to clear bits without varying the others, and the base macro, to toggle a specific bit. For example:
+
+```c
+#define RCC_CR_HSEON_Pos        (16U)
+#define RCC_CR_HSEON_Msk        (0x1UL << RCC_CR_HSEON_Pos)
+#define RCC_CR_HSEON            RCC_CR_HSEON_Msk
+
+//For bigger bit fields we do as follows
+
+#define RCC_CR_HSITRIM_Pos      (3U)
+#define RCC_CR_HSITRIM_Msk      (0x1FUL << RCC_CR_HSITRIM_Pos)
+#define RCC_CR_HSITRIM          RCC_CR_HSITRIM_Msk
+```
