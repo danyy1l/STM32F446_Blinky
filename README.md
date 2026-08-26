@@ -90,7 +90,7 @@ typedef struct {
 
 Once filled the structs, we need to map their macros to the corresponding memory addresses. We can get the memory addresses from Section 2.2.2 Table 1. STM32F446xx register boundary addresses:
 
-![STM32F446xx register boundary addresses][assets/RCC_GPIO_mem.png]
+![STM32F446xx register boundary addresses](assets/RCC_GPIO_mem.png)
 
 Next, we have to create macros for the bits for each corresponding register. We will follow the same pattern as the manufacturer, where we create a position macro, representing which bit in the register we are addressing, a mask macro, where we shift the value to its desired position in the register to clear bits without varying the others, and the base macro, to toggle a specific bit. For example:
 
