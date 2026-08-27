@@ -92,6 +92,27 @@ Once filled the structs, we need to map their macros to the corresponding memory
 
 ![STM32F446xx register boundary addresses](assets/RCC_GPIO_mem.png)
 
+```c
+#define PERIPH_BASE 0x40000000UL
+
+#define APB1PERIPH_BASE PERIPH_BASE
+#define APB2PERIPH_BASE (PERIPH_BASE + 0x00010000UL)
+#define AHB1PERIPH_BASE (PERIPH_BASE + 0x00020000UL)
+#define AHB2PERIPH_BASE (PERIPH_BASE + 0x10000000UL)
+#define AHB3PERIPH_BASE (PERIPH_BASE + 0x20000000UL)
+
+#define RCC_BASE (AHB1PERIPH_BASE + 0x00003800UL)
+
+#define GPIOA_BASE (AHB1PERIPH_BASE)
+#define GPIOB_BASE (AHB1PERIPH_BASE + 0x00000400UL)
+#define GPIOC_BASE (AHB1PERIPH_BASE + 0x00000800UL)
+#define GPIOD_BASE (AHB1PERIPH_BASE + 0x00000C00UL)
+#define GPIOE_BASE (AHB1PERIPH_BASE + 0x00001000UL)
+#define GPIOF_BASE (AHB1PERIPH_BASE + 0x00001400UL)
+#define GPIOG_BASE (AHB1PERIPH_BASE + 0x00001800UL)
+#define GPIOH_BASE (AHB1PERIPH_BASE + 0x00001C00UL)
+```
+
 Next, we have to create macros for the bits for each corresponding register. We will follow the same pattern as the manufacturer, where we create a position macro, representing which bit in the register we are addressing, a mask macro, where we shift the value to its desired position in the register to clear bits without varying the others, and the base macro, to toggle a specific bit. For example:
 
 ```c
