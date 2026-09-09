@@ -1651,7 +1651,8 @@ typedef struct {
 #define RCC_DCKCFGR2_SPDIFRXSEL         RCC_DCKCFGR2_SPDIFRXSEL_Msk
 
 
-
+/* ------------------------ GPIO ------------------------ */
+/*  */
 
 
 #ifdef __cplusplus
