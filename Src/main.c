@@ -17,18 +17,18 @@ int main(void) {
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Enable clock for PORT A
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN; // Enable clock for PORT C
 
-  GPIOA->MODER &= ~GPIO_MODER_MODE5; // Clear mode bits
+  GPIOA->MODER &= ~GPIO_MODER_MODER5; // Clear mode bits
   GPIOA->MODER |=
-      GPIO_MODER_MODE5_0; // Activate bit 0, as 01 is output mode for moder
+      GPIO_MODER_MODER5_0; // Activate bit 0, as 01 is output mode for moder
   GPIOA->OTYPER &= ~GPIO_OTYPER_OT5; // Ensure port is in push-pull state
                                      // instead of open drain
   GPIOA->OSPEEDR &=
-      ~GPIO_OSPEEDER_OSPEEDR5; // Clear speed bits to set starting low speed
+      ~GPIO_OSPEEDR_OSPEEDR5; // Clear speed bits to set starting low speed
 
-  GPIOC->MODER &= ~GPIO_MODER_MODE13;
+  GPIOC->MODER &= ~GPIO_MODER_MODER13;
   GPIOC->OTYPER &= ~GPIO_OTYPER_OT13;
   GPIOC->OSPEEDR &=
-      ~GPIO_OSPEEDER_OSPEEDR13; // Clear speed bits to set starting low speed
+      ~GPIO_OSPEEDR_OSPEEDR13; // Clear speed bits to set starting low speed
 
   Blink_Speed current_speed = VERY_SLOW;
   volatile uint32_t count = 1000000U;
@@ -36,7 +36,7 @@ int main(void) {
   uint32_t ticks = 0;
 
   while (1) {
-    if ((GPIOC->IDR & GPIO_IDR_ID13) == 0) {
+    if ((GPIOC->IDR & GPIO_IDR_IDR13) == 0) {
       if (button_pressed == 0) {
         button_pressed = 1;
 
@@ -68,7 +68,7 @@ int main(void) {
 
     ++ticks;
     if (ticks >= count) {
-      GPIOA->ODR ^= GPIO_ODR_OD5;
+      GPIOA->ODR ^= GPIO_ODR_ODR5;
       ticks = 0;
     }
   }
