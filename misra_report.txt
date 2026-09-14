@@ -1,0 +1,8 @@
+Inc/utils.h:21:0: style: misra violation (use --rule-texts=<file> to get proper output) [misra-c2012-20.10]
+#define HW_ASSERT(expr)                                  \
+^
+Src/rcc.c:0:0: information: Limiting analysis of branches. Use --check-level=exhaustive to analyze all branches. [normalCheckLevelMaxBranches]
+
+^
+nofile:0:0: information: Active checkers: 119/186 (use --checkers-report=<filename> to see details) [checkersReport]
+

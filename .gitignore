@@ -1,7 +1,7 @@
-.gitignore
-
-**/*.elf
-**/*.map
-**/*.bin
-**/*.o
-
+**/.map
+**/.elf
+**/.bin
+**/.o
+**/.d
+**/*.c.dump
+**/.c.ctu-info
