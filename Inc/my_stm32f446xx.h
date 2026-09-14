@@ -1,5 +1,5 @@
-#ifndef __MYSTM32F446xx_H_
-#define __MYSTM32F446xx_H_
+#ifndef MYSTM32F446xx_H
+#define MYSTM32F446xx_H
 
 #ifdef __cplusplus
 extern "C"  {
@@ -1670,7 +1670,6 @@ typedef struct {
 #define GPIO_MODER_MODER0_Pos           (0U)
 #define GPIO_MODER_MODER0_Msk           (0x3UL << GPIO_MODER_MODER0_Pos)          /*!< 0x00000003 */
 #define GPIO_MODER_MODER0               GPIO_MODER_MODER0_Msk
-
 #define GPIO_MODER_MODER0_0             (0x1UL << GPIO_MODER_MODER0_Pos)          /*!< 0x00000001 */
 #define GPIO_MODER_MODER0_1             (0x2UL << GPIO_MODER_MODER0_Pos)          /*!< 0x00000002 */
 
@@ -1678,7 +1677,6 @@ typedef struct {
 #define GPIO_MODER_MODER1_Pos           (2U)
 #define GPIO_MODER_MODER1_Msk           (0x3UL << GPIO_MODER_MODER1_Pos)          /*!< 0x0000000C */
 #define GPIO_MODER_MODER1               GPIO_MODER_MODER1_Msk
-
 #define GPIO_MODER_MODER1_0             (0x1UL << GPIO_MODER_MODER1_Pos)          /*!< 0x00000004 */
 #define GPIO_MODER_MODER1_1             (0x2UL << GPIO_MODER_MODER1_Pos)          /*!< 0x00000008 */
 
@@ -1686,7 +1684,6 @@ typedef struct {
 #define GPIO_MODER_MODER2_Pos           (4U)
 #define GPIO_MODER_MODER2_Msk           (0x3UL << GPIO_MODER_MODER2_Pos)          /*!< 0x00000030 */
 #define GPIO_MODER_MODER2               GPIO_MODER_MODER2_Msk
-
 #define GPIO_MODER_MODER2_0             (0x1UL << GPIO_MODER_MODER2_Pos)          /*!< 0x00000010 */
 #define GPIO_MODER_MODER2_1             (0x2UL << GPIO_MODER_MODER2_Pos)          /*!< 0x00000020 */
 
@@ -1694,7 +1691,6 @@ typedef struct {
 #define GPIO_MODER_MODER3_Pos           (6U)
 #define GPIO_MODER_MODER3_Msk           (0x3UL << GPIO_MODER_MODER3_Pos)          /*!< 0x000000C0 */
 #define GPIO_MODER_MODER3               GPIO_MODER_MODER3_Msk
-
 #define GPIO_MODER_MODER3_0             (0x1UL << GPIO_MODER_MODER3_Pos)          /*!< 0x00000040 */
 #define GPIO_MODER_MODER3_1             (0x2UL << GPIO_MODER_MODER3_Pos)          /*!< 0x00000080 */
 
@@ -1702,7 +1698,6 @@ typedef struct {
 #define GPIO_MODER_MODER4_Pos           (8U)
 #define GPIO_MODER_MODER4_Msk           (0x3UL << GPIO_MODER_MODER4_Pos)          /*!< 0x00000300 */
 #define GPIO_MODER_MODER4               GPIO_MODER_MODER4_Msk
-
 #define GPIO_MODER_MODER4_0             (0x1UL << GPIO_MODER_MODER4_Pos)          /*!< 0x00000100 */
 #define GPIO_MODER_MODER4_1             (0x2UL << GPIO_MODER_MODER4_Pos)          /*!< 0x00000200 */
 
@@ -1710,7 +1705,6 @@ typedef struct {
 #define GPIO_MODER_MODER5_Pos           (10U)
 #define GPIO_MODER_MODER5_Msk           (0x3UL << GPIO_MODER_MODER5_Pos)          /*!< 0x00000C00 */
 #define GPIO_MODER_MODER5               GPIO_MODER_MODER5_Msk
-
 #define GPIO_MODER_MODER5_0             (0x1UL << GPIO_MODER_MODER5_Pos)          /*!< 0x00000400 */
 #define GPIO_MODER_MODER5_1             (0x2UL << GPIO_MODER_MODER5_Pos)          /*!< 0x00000800 */
 
@@ -1718,7 +1712,6 @@ typedef struct {
 #define GPIO_MODER_MODER6_Pos           (12U)
 #define GPIO_MODER_MODER6_Msk           (0x3UL << GPIO_MODER_MODER6_Pos)          /*!< 0x00003000 */
 #define GPIO_MODER_MODER6               GPIO_MODER_MODER6_Msk
-
 #define GPIO_MODER_MODER6_0             (0x1UL << GPIO_MODER_MODER6_Pos)          /*!< 0x00001000 */
 #define GPIO_MODER_MODER6_1             (0x2UL << GPIO_MODER_MODER6_Pos)          /*!< 0x00002000 */
 
@@ -1726,7 +1719,6 @@ typedef struct {
 #define GPIO_MODER_MODER7_Pos           (14U)
 #define GPIO_MODER_MODER7_Msk           (0x3UL << GPIO_MODER_MODER7_Pos)          /*!< 0x0000C000 */
 #define GPIO_MODER_MODER7               GPIO_MODER_MODER7_Msk
-
 #define GPIO_MODER_MODER7_0             (0x1UL << GPIO_MODER_MODER7_Pos)          /*!< 0x00004000 */
 #define GPIO_MODER_MODER7_1             (0x2UL << GPIO_MODER_MODER7_Pos)          /*!< 0x00008000 */
 
@@ -1734,7 +1726,6 @@ typedef struct {
 #define GPIO_MODER_MODER8_Pos           (16U)
 #define GPIO_MODER_MODER8_Msk           (0x3UL << GPIO_MODER_MODER8_Pos)          /*!< 0x00030000 */
 #define GPIO_MODER_MODER8               GPIO_MODER_MODER8_Msk
-
 #define GPIO_MODER_MODER8_0             (0x1UL << GPIO_MODER_MODER8_Pos)          /*!< 0x00010000 */
 #define GPIO_MODER_MODER8_1             (0x2UL << GPIO_MODER_MODER8_Pos)          /*!< 0x00020000 */
 
@@ -1742,7 +1733,6 @@ typedef struct {
 #define GPIO_MODER_MODER9_Pos           (18U)
 #define GPIO_MODER_MODER9_Msk           (0x3UL << GPIO_MODER_MODER9_Pos)          /*!< 0x000C0000 */
 #define GPIO_MODER_MODER9               GPIO_MODER_MODER9_Msk
-
 #define GPIO_MODER_MODER9_0             (0x1UL << GPIO_MODER_MODER9_Pos)          /*!< 0x00040000 */
 #define GPIO_MODER_MODER9_1             (0x2UL << GPIO_MODER_MODER9_Pos)          /*!< 0x00080000 */
 
@@ -1750,7 +1740,6 @@ typedef struct {
 #define GPIO_MODER_MODER10_Pos          (20U)
 #define GPIO_MODER_MODER10_Msk          (0x3UL << GPIO_MODER_MODER10_Pos)         /*!< 0x00300000 */
 #define GPIO_MODER_MODER10              GPIO_MODER_MODER10_Msk
-
 #define GPIO_MODER_MODER10_0            (0x1UL << GPIO_MODER_MODER10_Pos)         /*!< 0x00100000 */
 #define GPIO_MODER_MODER10_1            (0x2UL << GPIO_MODER_MODER10_Pos)         /*!< 0x00200000 */
 
@@ -1758,7 +1747,6 @@ typedef struct {
 #define GPIO_MODER_MODER11_Pos          (22U)
 #define GPIO_MODER_MODER11_Msk          (0x3UL << GPIO_MODER_MODER11_Pos)         /*!< 0x00C00000 */
 #define GPIO_MODER_MODER11              GPIO_MODER_MODER11_Msk
-
 #define GPIO_MODER_MODER11_0            (0x1UL << GPIO_MODER_MODER11_Pos)         /*!< 0x00400000 */
 #define GPIO_MODER_MODER11_1            (0x2UL << GPIO_MODER_MODER11_Pos)         /*!< 0x00800000 */
 
@@ -1766,7 +1754,6 @@ typedef struct {
 #define GPIO_MODER_MODER12_Pos          (24U)
 #define GPIO_MODER_MODER12_Msk          (0x3UL << GPIO_MODER_MODER12_Pos)         /*!< 0x03000000 */
 #define GPIO_MODER_MODER12              GPIO_MODER_MODER12_Msk
-
 #define GPIO_MODER_MODER12_0            (0x1UL << GPIO_MODER_MODER12_Pos)         /*!< 0x01000000 */
 #define GPIO_MODER_MODER12_1            (0x2UL << GPIO_MODER_MODER12_Pos)         /*!< 0x02000000 */
 
@@ -1774,7 +1761,6 @@ typedef struct {
 #define GPIO_MODER_MODER13_Pos          (26U)
 #define GPIO_MODER_MODER13_Msk          (0x3UL << GPIO_MODER_MODER13_Pos)         /*!< 0x0C000000 */
 #define GPIO_MODER_MODER13              GPIO_MODER_MODER13_Msk
-
 #define GPIO_MODER_MODER13_0            (0x1UL << GPIO_MODER_MODER13_Pos)         /*!< 0x04000000 */
 #define GPIO_MODER_MODER13_1            (0x2UL << GPIO_MODER_MODER13_Pos)         /*!< 0x08000000 */
 
@@ -1782,7 +1768,6 @@ typedef struct {
 #define GPIO_MODER_MODER14_Pos          (28U)
 #define GPIO_MODER_MODER14_Msk          (0x3UL << GPIO_MODER_MODER14_Pos)         /*!< 0x30000000 */
 #define GPIO_MODER_MODER14              GPIO_MODER_MODER14_Msk
-
 #define GPIO_MODER_MODER14_0            (0x1UL << GPIO_MODER_MODER14_Pos)         /*!< 0x10000000 */
 #define GPIO_MODER_MODER14_1            (0x2UL << GPIO_MODER_MODER14_Pos)         /*!< 0x20000000 */
 
@@ -1790,7 +1775,6 @@ typedef struct {
 #define GPIO_MODER_MODER15_Pos          (30U)
 #define GPIO_MODER_MODER15_Msk          (0x3UL << GPIO_MODER_MODER15_Pos)         /*!< 0xC0000000 */
 #define GPIO_MODER_MODER15              GPIO_MODER_MODER15_Msk
-
 #define GPIO_MODER_MODER15_0            (0x1UL << GPIO_MODER_MODER15_Pos)         /*!< 0x40000000 */
 #define GPIO_MODER_MODER15_1            (0x2UL << GPIO_MODER_MODER15_Pos)         /*!< 0x80000000 */
 
@@ -1865,7 +1849,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR0_Pos       (0U)
 #define GPIO_OSPEEDR_OSPEEDR0_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR0_Pos)      /*!< 0x00000003 */
 #define GPIO_OSPEEDR_OSPEEDR0           GPIO_OSPEEDR_OSPEEDR0_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR0_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR0_Pos)      /*!< 0x00000001 */
 #define GPIO_OSPEEDR_OSPEEDR0_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR0_Pos)      /*!< 0x00000002 */
 
@@ -1873,7 +1856,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR1_Pos       (2U)
 #define GPIO_OSPEEDR_OSPEEDR1_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR1_Pos)      /*!< 0x0000000C */
 #define GPIO_OSPEEDR_OSPEEDR1           GPIO_OSPEEDR_OSPEEDR1_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR1_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR1_Pos)      /*!< 0x00000004 */
 #define GPIO_OSPEEDR_OSPEEDR1_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR1_Pos)      /*!< 0x00000008 */
 
@@ -1881,7 +1863,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR2_Pos       (4U)
 #define GPIO_OSPEEDR_OSPEEDR2_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR2_Pos)      /*!< 0x00000030 */
 #define GPIO_OSPEEDR_OSPEEDR2           GPIO_OSPEEDR_OSPEEDR2_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR2_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR2_Pos)      /*!< 0x00000010 */
 #define GPIO_OSPEEDR_OSPEEDR2_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR2_Pos)      /*!< 0x00000020 */
 
@@ -1889,7 +1870,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR3_Pos       (6U)
 #define GPIO_OSPEEDR_OSPEEDR3_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR3_Pos)      /*!< 0x000000C0 */
 #define GPIO_OSPEEDR_OSPEEDR3           GPIO_OSPEEDR_OSPEEDR3_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR3_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR3_Pos)      /*!< 0x00000040 */
 #define GPIO_OSPEEDR_OSPEEDR3_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR3_Pos)      /*!< 0x00000080 */
 
@@ -1897,7 +1877,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR4_Pos       (8U)
 #define GPIO_OSPEEDR_OSPEEDR4_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR4_Pos)      /*!< 0x00000300 */
 #define GPIO_OSPEEDR_OSPEEDR4           GPIO_OSPEEDR_OSPEEDR4_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR4_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR4_Pos)      /*!< 0x00000100 */
 #define GPIO_OSPEEDR_OSPEEDR4_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR4_Pos)      /*!< 0x00000200 */
 
@@ -1905,7 +1884,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR5_Pos       (10U)
 #define GPIO_OSPEEDR_OSPEEDR5_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR5_Pos)      /*!< 0x00000C00 */
 #define GPIO_OSPEEDR_OSPEEDR5           GPIO_OSPEEDR_OSPEEDR5_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR5_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR5_Pos)      /*!< 0x00000400 */
 #define GPIO_OSPEEDR_OSPEEDR5_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR5_Pos)      /*!< 0x00000800 */
 
@@ -1913,7 +1891,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR6_Pos       (12U)
 #define GPIO_OSPEEDR_OSPEEDR6_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR6_Pos)      /*!< 0x00003000 */
 #define GPIO_OSPEEDR_OSPEEDR6           GPIO_OSPEEDR_OSPEEDR6_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR6_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR6_Pos)      /*!< 0x00001000 */
 #define GPIO_OSPEEDR_OSPEEDR6_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR6_Pos)      /*!< 0x00002000 */
 
@@ -1921,7 +1898,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR7_Pos       (14U)
 #define GPIO_OSPEEDR_OSPEEDR7_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR7_Pos)      /*!< 0x0000C000 */
 #define GPIO_OSPEEDR_OSPEEDR7           GPIO_OSPEEDR_OSPEEDR7_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR7_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR7_Pos)      /*!< 0x00004000 */
 #define GPIO_OSPEEDR_OSPEEDR7_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR7_Pos)      /*!< 0x00008000 */
 
@@ -1929,7 +1905,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR8_Pos       (16U)
 #define GPIO_OSPEEDR_OSPEEDR8_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR8_Pos)      /*!< 0x00030000 */
 #define GPIO_OSPEEDR_OSPEEDR8           GPIO_OSPEEDR_OSPEEDR8_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR8_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR8_Pos)      /*!< 0x00010000 */
 #define GPIO_OSPEEDR_OSPEEDR8_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR8_Pos)      /*!< 0x00020000 */
 
@@ -1937,7 +1912,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR9_Pos       (18U)
 #define GPIO_OSPEEDR_OSPEEDR9_Msk       (0x3UL << GPIO_OSPEEDR_OSPEEDR9_Pos)      /*!< 0x000C0000 */
 #define GPIO_OSPEEDR_OSPEEDR9           GPIO_OSPEEDR_OSPEEDR9_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR9_0         (0x1UL << GPIO_OSPEEDR_OSPEEDR9_Pos)      /*!< 0x00040000 */
 #define GPIO_OSPEEDR_OSPEEDR9_1         (0x2UL << GPIO_OSPEEDR_OSPEEDR9_Pos)      /*!< 0x00080000 */
 
@@ -1945,7 +1919,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR10_Pos      (20U)
 #define GPIO_OSPEEDR_OSPEEDR10_Msk      (0x3UL << GPIO_OSPEEDR_OSPEEDR10_Pos)     /*!< 0x00300000 */
 #define GPIO_OSPEEDR_OSPEEDR10          GPIO_OSPEEDR_OSPEEDR10_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR10_0        (0x1UL << GPIO_OSPEEDR_OSPEEDR10_Pos)     /*!< 0x00100000 */
 #define GPIO_OSPEEDR_OSPEEDR10_1        (0x2UL << GPIO_OSPEEDR_OSPEEDR10_Pos)     /*!< 0x00200000 */
 
@@ -1953,7 +1926,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR11_Pos      (22U)
 #define GPIO_OSPEEDR_OSPEEDR11_Msk      (0x3UL << GPIO_OSPEEDR_OSPEEDR11_Pos)     /*!< 0x00C00000 */
 #define GPIO_OSPEEDR_OSPEEDR11          GPIO_OSPEEDR_OSPEEDR11_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR11_0        (0x1UL << GPIO_OSPEEDR_OSPEEDR11_Pos)     /*!< 0x00400000 */
 #define GPIO_OSPEEDR_OSPEEDR11_1        (0x2UL << GPIO_OSPEEDR_OSPEEDR11_Pos)     /*!< 0x00800000 */
 
@@ -1961,7 +1933,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR12_Pos      (24U)
 #define GPIO_OSPEEDR_OSPEEDR12_Msk      (0x3UL << GPIO_OSPEEDR_OSPEEDR12_Pos)     /*!< 0x03000000 */
 #define GPIO_OSPEEDR_OSPEEDR12          GPIO_OSPEEDR_OSPEEDR12_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR12_0        (0x1UL << GPIO_OSPEEDR_OSPEEDR12_Pos)     /*!< 0x01000000 */
 #define GPIO_OSPEEDR_OSPEEDR12_1        (0x2UL << GPIO_OSPEEDR_OSPEEDR12_Pos)     /*!< 0x02000000 */
 
@@ -1969,7 +1940,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR13_Pos      (26U)
 #define GPIO_OSPEEDR_OSPEEDR13_Msk      (0x3UL << GPIO_OSPEEDR_OSPEEDR13_Pos)     /*!< 0x0C000000 */
 #define GPIO_OSPEEDR_OSPEEDR13          GPIO_OSPEEDR_OSPEEDR13_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR13_0        (0x1UL << GPIO_OSPEEDR_OSPEEDR13_Pos)     /*!< 0x04000000 */
 #define GPIO_OSPEEDR_OSPEEDR13_1        (0x2UL << GPIO_OSPEEDR_OSPEEDR13_Pos)     /*!< 0x08000000 */
 
@@ -1977,7 +1947,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR14_Pos      (28U)
 #define GPIO_OSPEEDR_OSPEEDR14_Msk      (0x3UL << GPIO_OSPEEDR_OSPEEDR14_Pos)     /*!< 0x30000000 */
 #define GPIO_OSPEEDR_OSPEEDR14          GPIO_OSPEEDR_OSPEEDR14_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR14_0        (0x1UL << GPIO_OSPEEDR_OSPEEDR14_Pos)     /*!< 0x10000000 */
 #define GPIO_OSPEEDR_OSPEEDR14_1        (0x2UL << GPIO_OSPEEDR_OSPEEDR14_Pos)     /*!< 0x20000000 */
 
@@ -1985,7 +1954,6 @@ typedef struct {
 #define GPIO_OSPEEDR_OSPEEDR15_Pos      (30U)
 #define GPIO_OSPEEDR_OSPEEDR15_Msk      (0x3UL << GPIO_OSPEEDR_OSPEEDR15_Pos)     /*!< 0xC0000000 */
 #define GPIO_OSPEEDR_OSPEEDR15          GPIO_OSPEEDR_OSPEEDR15_Msk
-
 #define GPIO_OSPEEDR_OSPEEDR15_0        (0x1UL << GPIO_OSPEEDR_OSPEEDR15_Pos)     /*!< 0x40000000 */
 #define GPIO_OSPEEDR_OSPEEDR15_1        (0x2UL << GPIO_OSPEEDR_OSPEEDR15_Pos)     /*!< 0x80000000 */
 
@@ -1993,7 +1961,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR0_Pos           (0U)
 #define GPIO_PUPDR_PUPDR0_Msk           (0x3UL << GPIO_PUPDR_PUPDR0_Pos)          /*!< 0x00000003 */
 #define GPIO_PUPDR_PUPDR0               GPIO_PUPDR_PUPDR0_Msk
-
 #define GPIO_PUPDR_PUPDR0_0             (0x1UL << GPIO_PUPDR_PUPDR0_Pos)          /*!< 0x00000001 */
 #define GPIO_PUPDR_PUPDR0_1             (0x2UL << GPIO_PUPDR_PUPDR0_Pos)          /*!< 0x00000002 */
 
@@ -2001,7 +1968,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR1_Pos           (2U)
 #define GPIO_PUPDR_PUPDR1_Msk           (0x3UL << GPIO_PUPDR_PUPDR1_Pos)          /*!< 0x0000000C */
 #define GPIO_PUPDR_PUPDR1               GPIO_PUPDR_PUPDR1_Msk
-
 #define GPIO_PUPDR_PUPDR1_0             (0x1UL << GPIO_PUPDR_PUPDR1_Pos)          /*!< 0x00000004 */
 #define GPIO_PUPDR_PUPDR1_1             (0x2UL << GPIO_PUPDR_PUPDR1_Pos)          /*!< 0x00000008 */
 
@@ -2009,7 +1975,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR2_Pos           (4U)
 #define GPIO_PUPDR_PUPDR2_Msk           (0x3UL << GPIO_PUPDR_PUPDR2_Pos)          /*!< 0x00000030 */
 #define GPIO_PUPDR_PUPDR2               GPIO_PUPDR_PUPDR2_Msk
-
 #define GPIO_PUPDR_PUPDR2_0             (0x1UL << GPIO_PUPDR_PUPDR2_Pos)          /*!< 0x00000010 */
 #define GPIO_PUPDR_PUPDR2_1             (0x2UL << GPIO_PUPDR_PUPDR2_Pos)          /*!< 0x00000020 */
 
@@ -2017,7 +1982,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR3_Pos           (6U)
 #define GPIO_PUPDR_PUPDR3_Msk           (0x3UL << GPIO_PUPDR_PUPDR3_Pos)          /*!< 0x000000C0 */
 #define GPIO_PUPDR_PUPDR3               GPIO_PUPDR_PUPDR3_Msk
-
 #define GPIO_PUPDR_PUPDR3_0             (0x1UL << GPIO_PUPDR_PUPDR3_Pos)          /*!< 0x00000040 */
 #define GPIO_PUPDR_PUPDR3_1             (0x2UL << GPIO_PUPDR_PUPDR3_Pos)          /*!< 0x00000080 */
 
@@ -2025,7 +1989,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR4_Pos           (8U)
 #define GPIO_PUPDR_PUPDR4_Msk           (0x3UL << GPIO_PUPDR_PUPDR4_Pos)          /*!< 0x00000300 */
 #define GPIO_PUPDR_PUPDR4               GPIO_PUPDR_PUPDR4_Msk
-
 #define GPIO_PUPDR_PUPDR4_0             (0x1UL << GPIO_PUPDR_PUPDR4_Pos)          /*!< 0x00000100 */
 #define GPIO_PUPDR_PUPDR4_1             (0x2UL << GPIO_PUPDR_PUPDR4_Pos)          /*!< 0x00000200 */
 
@@ -2033,7 +1996,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR5_Pos           (10U)
 #define GPIO_PUPDR_PUPDR5_Msk           (0x3UL << GPIO_PUPDR_PUPDR5_Pos)          /*!< 0x00000C00 */
 #define GPIO_PUPDR_PUPDR5               GPIO_PUPDR_PUPDR5_Msk
-
 #define GPIO_PUPDR_PUPDR5_0             (0x1UL << GPIO_PUPDR_PUPDR5_Pos)          /*!< 0x00000400 */
 #define GPIO_PUPDR_PUPDR5_1             (0x2UL << GPIO_PUPDR_PUPDR5_Pos)          /*!< 0x00000800 */
 
@@ -2041,7 +2003,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR6_Pos           (12U)
 #define GPIO_PUPDR_PUPDR6_Msk           (0x3UL << GPIO_PUPDR_PUPDR6_Pos)          /*!< 0x00003000 */
 #define GPIO_PUPDR_PUPDR6               GPIO_PUPDR_PUPDR6_Msk
-
 #define GPIO_PUPDR_PUPDR6_0             (0x1UL << GPIO_PUPDR_PUPDR6_Pos)          /*!< 0x00001000 */
 #define GPIO_PUPDR_PUPDR6_1             (0x2UL << GPIO_PUPDR_PUPDR6_Pos)          /*!< 0x00002000 */
 
@@ -2049,7 +2010,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR7_Pos           (14U)
 #define GPIO_PUPDR_PUPDR7_Msk           (0x3UL << GPIO_PUPDR_PUPDR7_Pos)          /*!< 0x0000C000 */
 #define GPIO_PUPDR_PUPDR7               GPIO_PUPDR_PUPDR7_Msk
-
 #define GPIO_PUPDR_PUPDR7_0             (0x1UL << GPIO_PUPDR_PUPDR7_Pos)          /*!< 0x00004000 */
 #define GPIO_PUPDR_PUPDR7_1             (0x2UL << GPIO_PUPDR_PUPDR7_Pos)          /*!< 0x00008000 */
 
@@ -2057,7 +2017,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR8_Pos           (16U)
 #define GPIO_PUPDR_PUPDR8_Msk           (0x3UL << GPIO_PUPDR_PUPDR8_Pos)          /*!< 0x00030000 */
 #define GPIO_PUPDR_PUPDR8               GPIO_PUPDR_PUPDR8_Msk
-
 #define GPIO_PUPDR_PUPDR8_0             (0x1UL << GPIO_PUPDR_PUPDR8_Pos)          /*!< 0x00010000 */
 #define GPIO_PUPDR_PUPDR8_1             (0x2UL << GPIO_PUPDR_PUPDR8_Pos)          /*!< 0x00020000 */
 
@@ -2065,7 +2024,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR9_Pos           (18U)
 #define GPIO_PUPDR_PUPDR9_Msk           (0x3UL << GPIO_PUPDR_PUPDR9_Pos)          /*!< 0x000C0000 */
 #define GPIO_PUPDR_PUPDR9               GPIO_PUPDR_PUPDR9_Msk
-
 #define GPIO_PUPDR_PUPDR9_0             (0x1UL << GPIO_PUPDR_PUPDR9_Pos)          /*!< 0x00040000 */
 #define GPIO_PUPDR_PUPDR9_1             (0x2UL << GPIO_PUPDR_PUPDR9_Pos)          /*!< 0x00080000 */
 
@@ -2073,7 +2031,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR10_Pos          (20U)
 #define GPIO_PUPDR_PUPDR10_Msk          (0x3UL << GPIO_PUPDR_PUPDR10_Pos)         /*!< 0x00300000 */
 #define GPIO_PUPDR_PUPDR10              GPIO_PUPDR_PUPDR10_Msk
-
 #define GPIO_PUPDR_PUPDR10_0            (0x1UL << GPIO_PUPDR_PUPDR10_Pos)         /*!< 0x00100000 */
 #define GPIO_PUPDR_PUPDR10_1            (0x2UL << GPIO_PUPDR_PUPDR10_Pos)         /*!< 0x00200000 */
 
@@ -2081,7 +2038,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR11_Pos          (22U)
 #define GPIO_PUPDR_PUPDR11_Msk          (0x3UL << GPIO_PUPDR_PUPDR11_Pos)         /*!< 0x00C00000 */
 #define GPIO_PUPDR_PUPDR11              GPIO_PUPDR_PUPDR11_Msk
-
 #define GPIO_PUPDR_PUPDR11_0            (0x1UL << GPIO_PUPDR_PUPDR11_Pos)         /*!< 0x00400000 */
 #define GPIO_PUPDR_PUPDR11_1            (0x2UL << GPIO_PUPDR_PUPDR11_Pos)         /*!< 0x00800000 */
 
@@ -2089,7 +2045,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR12_Pos          (24U)
 #define GPIO_PUPDR_PUPDR12_Msk          (0x3UL << GPIO_PUPDR_PUPDR12_Pos)         /*!< 0x03000000 */
 #define GPIO_PUPDR_PUPDR12              GPIO_PUPDR_PUPDR12_Msk
-
 #define GPIO_PUPDR_PUPDR12_0            (0x1UL << GPIO_PUPDR_PUPDR12_Pos)         /*!< 0x01000000 */
 #define GPIO_PUPDR_PUPDR12_1            (0x2UL << GPIO_PUPDR_PUPDR12_Pos)         /*!< 0x02000000 */
 
@@ -2097,7 +2052,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR13_Pos          (26U)
 #define GPIO_PUPDR_PUPDR13_Msk          (0x3UL << GPIO_PUPDR_PUPDR13_Pos)         /*!< 0x0C000000 */
 #define GPIO_PUPDR_PUPDR13              GPIO_PUPDR_PUPDR13_Msk
-
 #define GPIO_PUPDR_PUPDR13_0            (0x1UL << GPIO_PUPDR_PUPDR13_Pos)         /*!< 0x04000000 */
 #define GPIO_PUPDR_PUPDR13_1            (0x2UL << GPIO_PUPDR_PUPDR13_Pos)         /*!< 0x08000000 */
 
@@ -2105,7 +2059,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR14_Pos          (28U)
 #define GPIO_PUPDR_PUPDR14_Msk          (0x3UL << GPIO_PUPDR_PUPDR14_Pos)         /*!< 0x30000000 */
 #define GPIO_PUPDR_PUPDR14              GPIO_PUPDR_PUPDR14_Msk
-
 #define GPIO_PUPDR_PUPDR14_0            (0x1UL << GPIO_PUPDR_PUPDR14_Pos)         /*!< 0x10000000 */
 #define GPIO_PUPDR_PUPDR14_1            (0x2UL << GPIO_PUPDR_PUPDR14_Pos)         /*!< 0x20000000 */
 
@@ -2113,7 +2066,6 @@ typedef struct {
 #define GPIO_PUPDR_PUPDR15_Pos          (30U)
 #define GPIO_PUPDR_PUPDR15_Msk          (0x3UL << GPIO_PUPDR_PUPDR15_Pos)         /*!< 0xC0000000 */
 #define GPIO_PUPDR_PUPDR15              GPIO_PUPDR_PUPDR15_Msk
-
 #define GPIO_PUPDR_PUPDR15_0            (0x1UL << GPIO_PUPDR_PUPDR15_Pos)         /*!< 0x40000000 */
 #define GPIO_PUPDR_PUPDR15_1            (0x2UL << GPIO_PUPDR_PUPDR15_Pos)         /*!< 0x80000000 */
 
@@ -2459,7 +2411,6 @@ typedef struct {
 #define GPIO_AFRL_AFRL0_Pos             (0U)
 #define GPIO_AFRL_AFRL0_Msk             (0xFUL << GPIO_AFRL_AFRL0_Pos)            /*!< 0x0000000F */
 #define GPIO_AFRL_AFRL0                 GPIO_AFRL_AFRL0_Msk
-
 #define GPIO_AFRL_AFRL0_0               (0x1UL << GPIO_AFRL_AFRL0_Pos)            /*!< 0x00000001 */
 #define GPIO_AFRL_AFRL0_1               (0x2UL << GPIO_AFRL_AFRL0_Pos)            /*!< 0x00000002 */
 #define GPIO_AFRL_AFRL0_2               (0x4UL << GPIO_AFRL_AFRL0_Pos)            /*!< 0x00000004 */
@@ -2468,7 +2419,6 @@ typedef struct {
 #define GPIO_AFRL_AFRL1_Pos             (4U)
 #define GPIO_AFRL_AFRL1_Msk             (0xFUL << GPIO_AFRL_AFRL1_Pos)            /*!< 0x000000F0 */
 #define GPIO_AFRL_AFRL1                 GPIO_AFRL_AFRL1_Msk
-
 #define GPIO_AFRL_AFRL1_0               (0x1UL << GPIO_AFRL_AFRL1_Pos)            /*!< 0x00000010 */
 #define GPIO_AFRL_AFRL1_1               (0x2UL << GPIO_AFRL_AFRL1_Pos)            /*!< 0x00000020 */
 #define GPIO_AFRL_AFRL1_2               (0x4UL << GPIO_AFRL_AFRL1_Pos)            /*!< 0x00000040 */
@@ -2477,7 +2427,6 @@ typedef struct {
 #define GPIO_AFRL_AFRL2_Pos             (8U)
 #define GPIO_AFRL_AFRL2_Msk             (0xFUL << GPIO_AFRL_AFRL2_Pos)            /*!< 0x00000F00 */
 #define GPIO_AFRL_AFRL2                 GPIO_AFRL_AFRL2_Msk
-
 #define GPIO_AFRL_AFRL2_0               (0x1UL << GPIO_AFRL_AFRL2_Pos)            /*!< 0x00000100 */
 #define GPIO_AFRL_AFRL2_1               (0x2UL << GPIO_AFRL_AFRL2_Pos)            /*!< 0x00000200 */
 #define GPIO_AFRL_AFRL2_2               (0x4UL << GPIO_AFRL_AFRL2_Pos)            /*!< 0x00000400 */
@@ -2486,7 +2435,6 @@ typedef struct {
 #define GPIO_AFRL_AFRL3_Pos             (12U)
 #define GPIO_AFRL_AFRL3_Msk             (0xFUL << GPIO_AFRL_AFRL3_Pos)            /*!< 0x0000F000 */
 #define GPIO_AFRL_AFRL3                 GPIO_AFRL_AFRL3_Msk
-
 #define GPIO_AFRL_AFRL3_0               (0x1UL << GPIO_AFRL_AFRL3_Pos)            /*!< 0x00001000 */
 #define GPIO_AFRL_AFRL3_1               (0x2UL << GPIO_AFRL_AFRL3_Pos)            /*!< 0x00002000 */
 #define GPIO_AFRL_AFRL3_2               (0x4UL << GPIO_AFRL_AFRL3_Pos)            /*!< 0x00004000 */
@@ -2495,7 +2443,6 @@ typedef struct {
 #define GPIO_AFRL_AFRL4_Pos             (16U)
 #define GPIO_AFRL_AFRL4_Msk             (0xFUL << GPIO_AFRL_AFRL4_Pos)            /*!< 0x000F0000 */
 #define GPIO_AFRL_AFRL4                 GPIO_AFRL_AFRL4_Msk
-
 #define GPIO_AFRL_AFRL4_0               (0x1UL << GPIO_AFRL_AFRL4_Pos)            /*!< 0x00010000 */
 #define GPIO_AFRL_AFRL4_1               (0x2UL << GPIO_AFRL_AFRL4_Pos)            /*!< 0x00020000 */
 #define GPIO_AFRL_AFRL4_2               (0x4UL << GPIO_AFRL_AFRL4_Pos)            /*!< 0x00040000 */
@@ -2504,7 +2451,6 @@ typedef struct {
 #define GPIO_AFRL_AFRL5_Pos             (20U)
 #define GPIO_AFRL_AFRL5_Msk             (0xFUL << GPIO_AFRL_AFRL5_Pos)            /*!< 0x00F00000 */
 #define GPIO_AFRL_AFRL5                 GPIO_AFRL_AFRL5_Msk
-
 #define GPIO_AFRL_AFRL5_0               (0x1UL << GPIO_AFRL_AFRL5_Pos)            /*!< 0x00100000 */
 #define GPIO_AFRL_AFRL5_1               (0x2UL << GPIO_AFRL_AFRL5_Pos)            /*!< 0x00200000 */
 #define GPIO_AFRL_AFRL5_2               (0x4UL << GPIO_AFRL_AFRL5_Pos)            /*!< 0x00400000 */
@@ -2513,7 +2459,6 @@ typedef struct {
 #define GPIO_AFRL_AFRL6_Pos             (24U)
 #define GPIO_AFRL_AFRL6_Msk             (0xFUL << GPIO_AFRL_AFRL6_Pos)            /*!< 0x0F000000 */
 #define GPIO_AFRL_AFRL6                 GPIO_AFRL_AFRL6_Msk
-
 #define GPIO_AFRL_AFRL6_0               (0x1UL << GPIO_AFRL_AFRL6_Pos)            /*!< 0x01000000 */
 #define GPIO_AFRL_AFRL6_1               (0x2UL << GPIO_AFRL_AFRL6_Pos)            /*!< 0x02000000 */
 #define GPIO_AFRL_AFRL6_2               (0x4UL << GPIO_AFRL_AFRL6_Pos)            /*!< 0x04000000 */
@@ -2522,7 +2467,6 @@ typedef struct {
 #define GPIO_AFRL_AFRL7_Pos             (28U)
 #define GPIO_AFRL_AFRL7_Msk             (0xFUL << GPIO_AFRL_AFRL7_Pos)            /*!< 0xF0000000 */
 #define GPIO_AFRL_AFRL7                 GPIO_AFRL_AFRL7_Msk
-
 #define GPIO_AFRL_AFRL7_0               (0x1UL << GPIO_AFRL_AFRL7_Pos)            /*!< 0x10000000 */
 #define GPIO_AFRL_AFRL7_1               (0x2UL << GPIO_AFRL_AFRL7_Pos)            /*!< 0x20000000 */
 #define GPIO_AFRL_AFRL7_2               (0x4UL << GPIO_AFRL_AFRL7_Pos)            /*!< 0x40000000 */
@@ -2534,7 +2478,6 @@ typedef struct {
 #define GPIO_AFRH_AFRH8_Pos             (0U)
 #define GPIO_AFRH_AFRH8_Msk             (0xFUL << GPIO_AFRH_AFRH8_Pos)            /*!< 0x0000000F */
 #define GPIO_AFRH_AFRH8                 GPIO_AFRH_AFRH8_Msk
-
 #define GPIO_AFRH_AFRH8_0               (0x1UL << GPIO_AFRH_AFRH8_Pos)            /*!< 0x00000001 */
 #define GPIO_AFRH_AFRH8_1               (0x2UL << GPIO_AFRH_AFRH8_Pos)            /*!< 0x00000002 */
 #define GPIO_AFRH_AFRH8_2               (0x4UL << GPIO_AFRH_AFRH8_Pos)            /*!< 0x00000004 */
@@ -2543,7 +2486,6 @@ typedef struct {
 #define GPIO_AFRH_AFRH9_Pos             (4U)
 #define GPIO_AFRH_AFRH9_Msk             (0xFUL << GPIO_AFRH_AFRH9_Pos)            /*!< 0x000000F0 */
 #define GPIO_AFRH_AFRH9                 GPIO_AFRH_AFRH9_Msk
-
 #define GPIO_AFRH_AFRH9_0               (0x1UL << GPIO_AFRH_AFRH9_Pos)            /*!< 0x00000010 */
 #define GPIO_AFRH_AFRH9_1               (0x2UL << GPIO_AFRH_AFRH9_Pos)            /*!< 0x00000020 */
 #define GPIO_AFRH_AFRH9_2               (0x4UL << GPIO_AFRH_AFRH9_Pos)            /*!< 0x00000040 */
@@ -2552,7 +2494,6 @@ typedef struct {
 #define GPIO_AFRH_AFRH10_Pos            (8U)
 #define GPIO_AFRH_AFRH10_Msk            (0xFUL << GPIO_AFRH_AFRH10_Pos)           /*!< 0x00000F00 */
 #define GPIO_AFRH_AFRH10                GPIO_AFRH_AFRH10_Msk
-
 #define GPIO_AFRH_AFRH10_0              (0x1UL << GPIO_AFRH_AFRH10_Pos)           /*!< 0x00000100 */
 #define GPIO_AFRH_AFRH10_1              (0x2UL << GPIO_AFRH_AFRH10_Pos)           /*!< 0x00000200 */
 #define GPIO_AFRH_AFRH10_2              (0x4UL << GPIO_AFRH_AFRH10_Pos)           /*!< 0x00000400 */
@@ -2561,7 +2502,6 @@ typedef struct {
 #define GPIO_AFRH_AFRH11_Pos            (12U)
 #define GPIO_AFRH_AFRH11_Msk            (0xFUL << GPIO_AFRH_AFRH11_Pos)           /*!< 0x0000F000 */
 #define GPIO_AFRH_AFRH11                GPIO_AFRH_AFRH11_Msk
-
 #define GPIO_AFRH_AFRH11_0              (0x1UL << GPIO_AFRH_AFRH11_Pos)           /*!< 0x00001000 */
 #define GPIO_AFRH_AFRH11_1              (0x2UL << GPIO_AFRH_AFRH11_Pos)           /*!< 0x00002000 */
 #define GPIO_AFRH_AFRH11_2              (0x4UL << GPIO_AFRH_AFRH11_Pos)           /*!< 0x00004000 */
@@ -2570,7 +2510,6 @@ typedef struct {
 #define GPIO_AFRH_AFRH12_Pos            (16U)
 #define GPIO_AFRH_AFRH12_Msk            (0xFUL << GPIO_AFRH_AFRH12_Pos)           /*!< 0x000F0000 */
 #define GPIO_AFRH_AFRH12                GPIO_AFRH_AFRH12_Msk
-
 #define GPIO_AFRH_AFRH12_0              (0x1UL << GPIO_AFRH_AFRH12_Pos)           /*!< 0x00010000 */
 #define GPIO_AFRH_AFRH12_1              (0x2UL << GPIO_AFRH_AFRH12_Pos)           /*!< 0x00020000 */
 #define GPIO_AFRH_AFRH12_2              (0x4UL << GPIO_AFRH_AFRH12_Pos)           /*!< 0x00040000 */
@@ -2579,7 +2518,6 @@ typedef struct {
 #define GPIO_AFRH_AFRH13_Pos            (20U)
 #define GPIO_AFRH_AFRH13_Msk            (0xFUL << GPIO_AFRH_AFRH13_Pos)           /*!< 0x00F00000 */
 #define GPIO_AFRH_AFRH13                GPIO_AFRH_AFRH13_Msk
-
 #define GPIO_AFRH_AFRH13_0              (0x1UL << GPIO_AFRH_AFRH13_Pos)           /*!< 0x00100000 */
 #define GPIO_AFRH_AFRH13_1              (0x2UL << GPIO_AFRH_AFRH13_Pos)           /*!< 0x00200000 */
 #define GPIO_AFRH_AFRH13_2              (0x4UL << GPIO_AFRH_AFRH13_Pos)           /*!< 0x00400000 */
@@ -2588,7 +2526,6 @@ typedef struct {
 #define GPIO_AFRH_AFRH14_Pos            (24U)
 #define GPIO_AFRH_AFRH14_Msk            (0xFUL << GPIO_AFRH_AFRH14_Pos)           /*!< 0x0F000000 */
 #define GPIO_AFRH_AFRH14                GPIO_AFRH_AFRH14_Msk
-
 #define GPIO_AFRH_AFRH14_0              (0x1UL << GPIO_AFRH_AFRH14_Pos)           /*!< 0x01000000 */
 #define GPIO_AFRH_AFRH14_1              (0x2UL << GPIO_AFRH_AFRH14_Pos)           /*!< 0x02000000 */
 #define GPIO_AFRH_AFRH14_2              (0x4UL << GPIO_AFRH_AFRH14_Pos)           /*!< 0x04000000 */
@@ -2597,17 +2534,14 @@ typedef struct {
 #define GPIO_AFRH_AFRH15_Pos            (28U)
 #define GPIO_AFRH_AFRH15_Msk            (0xFUL << GPIO_AFRH_AFRH15_Pos)           /*!< 0xF0000000 */
 #define GPIO_AFRH_AFRH15                GPIO_AFRH_AFRH15_Msk
-
 #define GPIO_AFRH_AFRH15_0              (0x1UL << GPIO_AFRH_AFRH15_Pos)           /*!< 0x10000000 */
 #define GPIO_AFRH_AFRH15_1              (0x2UL << GPIO_AFRH_AFRH15_Pos)           /*!< 0x20000000 */
 #define GPIO_AFRH_AFRH15_2              (0x4UL << GPIO_AFRH_AFRH15_Pos)           /*!< 0x40000000 */
 #define GPIO_AFRH_AFRH15_3              (0x8UL << GPIO_AFRH_AFRH15_Pos)           /*!< 0x80000000 */
 
 
-
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __MYSTM32F446xx_H_ */
+#endif /* MYSTM32F446xx_H */
