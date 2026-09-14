@@ -2,5 +2,6 @@
 **/.elf
 **/.bin
 **/.o
+**/.d
 **/*.c.dump
 **/.c.ctu-info

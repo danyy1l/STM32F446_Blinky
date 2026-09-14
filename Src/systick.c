@@ -15,21 +15,26 @@
  */
 
 uint32_t SysTick_Config(uint32_t ticks) {
+  uint32_t err = 0U;
+
   HW_ASSERT(ticks > 0U);
   HW_ASSERT((ticks - 1U) <= SYSTICK_MAX_TICKS);
 
-  if ((ticks - 1U) > SYSTICK_MAX_TICKS)
-    return 1U;
+  if ((ticks - 1U) > SYSTICK_MAX_TICKS) {
+    err = 1U;
+  } else {
 
-  SYSTICK->CTRL = 0U;
-  /* This is a redundant bit mask verification, if the system were
-   * Safety-Critical it might be more useful, but in this case its optional */
-  SYSTICK->LOAD = (ticks - 1U) & SYSTICK_LOAD_RELOAD_Msk;
-  SYSTICK->VAL = 0U;
+    SYSTICK->CTRL = 0U;
+    /* This is a redundant bit mask verification, if the system were
+     * Safety-Critical it might be more useful, but in this case its optional */
+    SYSTICK->LOAD = (ticks - 1U) & SYSTICK_LOAD_RELOAD_Msk;
+    SYSTICK->VAL = 0U;
 
-  /* Start systick timer */
-  SYSTICK->CTRL = (SYSTICK_CTRL_CLKSOURCE | SYSTICK_CTRL_ENABLE);
-  return 0U;
+    /* Start systick timer */
+    SYSTICK->CTRL = (SYSTICK_CTRL_CLKSOURCE | SYSTICK_CTRL_ENABLE);
+  }
+
+  return err;
 }
 
 void SysTick_Delay_Ms(uint32_t ms) {

@@ -14,7 +14,7 @@ void GPIO_SetMode(GPIO_typedef *port, uint8_t pin, GPIO_Mode_t mode) {
   HW_ASSERT(port != (void *)0);
   HW_ASSERT(pin <= GPIO_PIN_MAX);
 
-  uint32_t shift = pin * 2U;                // Each moder pin is 2 bits
+  uint32_t shift = (uint32_t)pin * 2U;      // Each moder pin is 2 bits
   port->MODER &= ~(0x3UL << shift);         // Clear moder bits for given pin
   port->MODER |= ((uint32_t)mode << shift); // Set new mode
 }
@@ -28,9 +28,9 @@ void GPIO_Write(GPIO_typedef *port, uint8_t pin, GPIO_PinState_t state) {
    * As seen in RM0390, bits 0-15 set, while bits 16-31 clear
    */
   if (state == GPIO_PIN_SET) {
-    port->BSRR = (1UL << pin);
+    port->BSRR = (1U << (uint32_t)pin);
   } else {
-    port->BSRR = (1UL << (pin + 16U));
+    port->BSRR = (1U << ((uint32_t)pin + 16U));
   }
 }
 
@@ -45,7 +45,7 @@ GPIO_PinState_t GPIO_Read(const GPIO_typedef *port, uint8_t pin) {
   HW_ASSERT(port != (void *)0);
   HW_ASSERT(pin <= GPIO_PIN_MAX);
 
-  uint32_t mask = (1UL << pin);
+  uint32_t mask = (1U << (uint32_t)pin);
 
   return ((port->IDR) & mask) ? GPIO_PIN_SET : GPIO_PIN_RESET;
 }

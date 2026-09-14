@@ -17,6 +17,7 @@
 int main(void) {
   uint32_t systick_err = SysTick_Config(SYSTEM_CORE_CLOCK / 1000U);
   HW_ASSERT(systick_err == 0U);
+  (void)systick_err;
 
   LED_Init();
 

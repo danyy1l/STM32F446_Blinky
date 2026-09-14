@@ -1,5 +1,6 @@
 #include <stdint.h>
 
+int main(void);
 void _reset(void);
 
 /* Import of Linker Script symbols, Declared as arrays to safely compare */
@@ -10,6 +11,7 @@ extern uint32_t _edata[];
 extern uint32_t _sidata[];
 
 typedef void (*Vector_Handler)(void);
+extern const Vector_Handler tab[16 + 97];
 
 /* Declaration of _estack as a function is standard in firmware, as it avoids
  * referencing with & or explicitly casting it */

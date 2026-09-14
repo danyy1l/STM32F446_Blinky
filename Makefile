@@ -7,6 +7,7 @@ CFLAGS  ?=  -W -Wall -Wextra -Werror -Wundef -Wshadow -Wdouble-promotion \
 LDFLAGS ?= -TLinkerScript_STM32_NUCLEO-F446RE.ld -nostartfiles -nostdlib \
            --specs=nano.specs -lc -lgcc -Wl,--gc-sections -Wl,-Map=$@.map
 
+INCLUDES = -I Inc/
 SOURCES = Src/main.c Src/startup.c Src/gpio.c Src/rcc.c Src/systick.c Src/bsp_led.c
 
 OBJECTS = $(SOURCES:.c=.o)
@@ -31,9 +32,9 @@ flash: firmware.bin
 	st-flash --reset write $< 0x08000000
 
 clean:
-	rm -f firmware.elf firmware.bin *.map $(OBJECTS) $(DEPS) misra_report.txt
+	rm -f firmware.elf firmware.bin *.map $(OBJECTS) $(DEPS) misra_report.log
 
 misra:
-	cppcheck --addon=misra.json --enable=warning,style --inconclusive --force $(SOURCES) 2> misra_report.txt
+	cppcheck $(INCLUDES) --addon=misra.json --suppressions-list=cppcheck_suppressions.txt --suppress=missingIncludeSystem --enable=all,style --inconclusive --force $(SOURCES) 2> misra_report.txt
 
 -include $(DEPS)

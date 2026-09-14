@@ -28,7 +28,7 @@ typedef struct {
 } SysTick_Typedef;
 
 /* SysTick memory mapping */
-#define SYSTICK_BASE 0xE000E010
+#define SYSTICK_BASE 0xE000E010U
 
 /* SysTick pointer definition */
 #define SYSTICK ((SysTick_Typedef *)SYSTICK_BASE)
