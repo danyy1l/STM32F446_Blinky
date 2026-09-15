@@ -35,6 +35,6 @@ clean:
 	rm -f firmware.elf firmware.bin *.map $(OBJECTS) $(DEPS) misra_report.log
 
 misra:
-	cppcheck $(INCLUDES) --addon=misra.json --suppressions-list=cppcheck_suppressions.txt --suppress=missingIncludeSystem --enable=all,style --inconclusive --force $(SOURCES) 2> misra_report.txt
+	cppcheck $(INCLUDES) --addon=misra.json --suppressions-list=cppcheck_suppressions.txt --suppress=missingIncludeSystem --enable=all,style --inconclusive --force $(SOURCES) 2> misra_report.log
 
 -include $(DEPS)
