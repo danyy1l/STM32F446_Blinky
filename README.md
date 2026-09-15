@@ -1,48 +1,27 @@
 # STM32F446 Custom HAL Blinky
 
 A bare-metal blinky implementation for the STM32 Nucleo-F446RE dev kit. A beginner project to dive into embedded systems.
-=======
-After experimenting with GPIO and its registers, the logical step up to this project is to create our own custom HAL for handling the memory addresses. As a first step, we can basically delete the contents of the Inc/ folder, as we will be creating our own header file. Next, we can begin writing our header file. In a new `my_stm32f446xx.h` file, we begin to write some code.
-
-Having implemented the blinky with the HAL provided by ST Microelectronics, we know a couple of our needs:
 
 ## Memory and registers
-* RCC struct
-* GPIOx struct (one for each GPIO port A-H)
-* Base addresses for each struct
-* Pin handling functions (GPIO_write_pin for example)
 
-So, I begin writing a general code structure:
+First, we need to consult the Reference Manual for the MCU (RM0390). As seen in section 2.3, Table 3, the MCU has 128kB for RAM and 512kB for flash memory (ROM). As seen in the table, the RAM section begins at 0x20000000 and flash at 0x08000000.
 
-```c
-#define __I volatile const /**< Defines read permission */
-#define __IO volatile      /**< Defines read / write permissions */
-#define __O volatile       /**< Defines write permission */
+![STM32F446RE Memory Mapping](assets/MemoryMapping_STM32F446.png)
 
-typedef struct {
+To know the registers we have to modify, we need to consult the Reference Manual section for GPIO ports (7.4). For example, GPIO port A (GPIOA) region begins at 0xA8000000, and from Table 1 in section 2.2.2 we know it has length of 1kB.
 
-} RCC_typedef;
+This is important because from the User Manual (UM1724 section 7.6) we learn that the User LD2 corresponds to I/O PA5 (pin 21), meaning it is located in GPIO port A.
 
 ## MCU boot and vector table
-=======
-#define RCC_BASE 0x00000000
 
-#define RCC (RCC_typedef *)RCC_BASE
+When the ARM MCU boots it has to read the "vector table" at the beginning of flash memory. The vector table is an array of 32-bit addresses of interrupt handlers, where first 16 entries are reserved and common to all ARM MCUs. The rest are specific to the MCU, as they are interrupt handlers for peripherals.
 
-typedef struct {
+Vector table for STM32F446 is in Table 38 and as seen, we have 16 standard and 97 board-specific entries.
 
-} GPIO_typedef;
+Every entry in the vector table contains the address of an interrupt handler, i.e a function that executes when a hardware interrupt ocurrs (IRQ). The first and second entries are exceptions, as those two values are: an initial stack pointer and an address of the boot function to execute (firmware entry point).
 
-#define GPIOA_BASE 0x00000000
-#define GPIOB_BASE 0x00000000
-#define GPIOC_BASE 0x00000000
-#define GPIOD_BASE 0x00000000
-#define GPIOE_BASE 0x00000000
-#define GPIOF_BASE 0x00000000
-#define GPIOG_BASE 0x00000000
-#define GPIOH_BASE 0x00000000
+Therefore, we need to make sure the firmware is composed in a way that the second 32-bit value in the ROM contains the address of the boot function.
 
-<<<<<<< HEAD
 ## Firmware test
 
 Now, we can create a main file, that specifies our boot function, which will initially do nothing (infinite loop), and specify a vector table containing 16 standard entries and 91 board-specific entries.
@@ -58,20 +37,11 @@ extern void _estack(void); // Defined in linker script
 __attribute__((section(".vectors"))) void(*const tab[16 + 97])(void) = {
     _estack, _reset
 };
-=======
-#define GPIOA (GPIO_typedef *)GPIOA_BASE
-#define GPIOB (GPIO_typedef *)GPIOB_BASE
-#define GPIOC (GPIO_typedef *)GPIOC_BASE
-#define GPIOD (GPIO_typedef *)GPIOD_BASE
-#define GPIOE (GPIO_typedef *)GPIOE_BASE
-#define GPIOF (GPIO_typedef *)GPIOF_BASE
-#define GPIOG (GPIO_typedef *)GPIOG_BASE
-#define GPIOH (GPIO_typedef *)GPIOH_BASE
 ```
 
-Next, we need to fill the struct with all the registers indicated by the Reference Manual (RM0390). For example, this would be the RCC struct.
+Here _reset() is the reset handler. The `void (*const tab[16 + 97])(void)` expression means to define an array of 16 + 97 pointers to functions that return nothing (void) and take no arguments (void). Each function should be an IRQ handler.
 
-The vector table defined with this is put in a section called .vectors, that we will tell in the linker script to be put at the beginning of the firmware, i.e at the beginning of the flash memory.
+The vector table defined by this is put in a section called .vectors, that we will tell in the linker script to be put at the beginning of the firmware, i.e at the beginning of the flash memory.
 
 ### Compilation
 
@@ -79,89 +49,42 @@ Compiling this code with the following command:
 
 ```bash
 $ arm-none-eabi-gcc -mcpu=cortex-m4 main.c -c
-```c
-typedef struct {
-  __IO uint32_t CR;
-  __IO uint32_t PLLCFGR;
-  __IO uint32_t CFGR;
-  __IO uint32_t CIR;
-  __IO uint32_t AHB1RSTR;
-  __IO uint32_t AHB2RSTR;
-  __IO uint32_t AHB3RSTR;
-  uint32_t RESERVED0;
-  __IO uint32_t APB1RSTR;
-  __IO uint32_t APB2RSTR;
-  uint32_t RESERVED1[2];
-  __IO uint32_t AHB1ENR;
-  __IO uint32_t AHB2ENR;
-  __IO uint32_t AHB3ENR;
-  uint32_t RESERVED2;
-  __IO uint32_t APB1ENR;
-  __IO uint32_t APB2ENR;
-  uint32_t RESERVED3[2];
-  __IO uint32_t AHB1LPENR;
-  __IO uint32_t AHB2LPENR;
-  __IO uint32_t AHB3LPENR;
-  uint32_t RESERVED4;
-  __IO uint32_t APB1LPENR;
-  __IO uint32_t APB2LPENR;
-  uint32_t RESERVED5[2];
-  __IO uint32_t BDCR;
-  __IO uint32_t CSR;
-  uint32_t RESERVED6[2];
-  __IO uint32_t SSCGR;
-  __IO uint32_t RRC_PLLI2SCFGR;
-  __IO uint32_t RRC_PLLSAICFGR;
-  __IO uint32_t DCKCFGR;
-  __IO uint32_t CKGATENR;
-  __IO uint32_t DCKCFGR2;
-} RCC_typedef;
 ```
 
-Once filled the structs, we need to map their macros to the corresponding memory addresses. We can get the memory addresses from Section 2.2.2 Table 1. STM32F446xx register boundary addresses:
+We obtain an object file `main.o`, containing the minimal firmware. If we run the `objdump` command we will see the sections contained:
 
 ```bash
 $ arm-none-eabi-objdump -h main.o
-=======
-![STM32F446xx register boundary addresses](assets/RCC_GPIO_mem.png)
->>>>>>> 3c9c18342aaebdf34179b429e573618409c8c436
 
-```c
-#define PERIPH_BASE 0x40000000UL
+main.o:     file format elf32-littlearm
 
-#define APB1PERIPH_BASE PERIPH_BASE
-#define APB2PERIPH_BASE (PERIPH_BASE + 0x00010000UL)
-#define AHB1PERIPH_BASE (PERIPH_BASE + 0x00020000UL)
-#define AHB2PERIPH_BASE (PERIPH_BASE + 0x10000000UL)
-#define AHB3PERIPH_BASE (PERIPH_BASE + 0x20000000UL)
-
-#define RCC_BASE (AHB1PERIPH_BASE + 0x00003800UL)
-
-#define GPIOA_BASE (AHB1PERIPH_BASE)
-#define GPIOB_BASE (AHB1PERIPH_BASE + 0x00000400UL)
-#define GPIOC_BASE (AHB1PERIPH_BASE + 0x00000800UL)
-#define GPIOD_BASE (AHB1PERIPH_BASE + 0x00000C00UL)
-#define GPIOE_BASE (AHB1PERIPH_BASE + 0x00001000UL)
-#define GPIOF_BASE (AHB1PERIPH_BASE + 0x00001400UL)
-#define GPIOG_BASE (AHB1PERIPH_BASE + 0x00001800UL)
-#define GPIOH_BASE (AHB1PERIPH_BASE + 0x00001C00UL)
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000002  00000000  00000000  00000034  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00000000  00000000  00000036  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00000000  00000000  00000036  2**0
+                  ALLOC
+  3 .vectors      000001ac  00000000  00000000  00000038  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+  4 .comment      00000012  00000000  00000000  000001e4  2**0
+                  CONTENTS, READONLY
+  5 .ARM.attributes 0000002e  00000000  00000000  000001f6  2**0
+                  CONTENTS, READONLY
 ```
 
-Next, we have to create macros for the bits for each corresponding register. We will follow the same pattern as the manufacturer, where we create a position macro, representing which bit in the register we are addressing, a mask macro, where we shift the value to its desired position in the register to clear bits without varying the others, and the base macro, to toggle a specific bit. For example:
+As seen in the result, the VMA/LMA addresses are set to 0, meaning our object file is not a firmware because it lacks the information where those sections should be loaded in the address space.
+
+The section .text contains firmware code, right now, the _reset() function. There are also an empty .data and .bss sections. The firmware will be copied to flash, but the data section should reside in RAM. Therefore _reset() must copy the contents of .data to RAM, and also write zeroes to the whole .bss section When compiling firmware, the output is an ELF file with sections: .text, .data, .rodata, .bss and others. The linker script maps ELF sections to different memory regions of the microcontroller, basically defining the firmware memory layout. We make the following script:
 
 ```c
-#define RCC_CR_HSEON_Pos        (16U)
-#define RCC_CR_HSEON_Msk        (0x1UL << RCC_CR_HSEON_Pos)
-#define RCC_CR_HSEON            RCC_CR_HSEON_Msk
-
-<<<<<<< HEAD
-```bash
 ENTRY(_reset):
 ```
 
 This line tells the linker the value of the entry point in the ELF header, basically a duplicate of what a vector table has. This is an aid for debuggers to set a breakpoint at the beginning.
 
-```bash
+```c
 MEMORY {
   /* f446 memory mapping */
   FLASH(rx) : ORIGIN = 0x08000000, LENGTH = 512K
@@ -171,13 +94,13 @@ MEMORY {
 
 This tells the linker the memory sections in the address space, their addresses and length.
 
-```bash
+```c
 _estack = ORIGIN(RAM) + LENGTH(RAM);
 ```
 
-This creates a symbol _estack (end stack) with value at the very end of the RAM. As the stack grows downwards, this is our initial stack value.
+This creates a symbol _estack(end stack) with value at the very end of the RAM. As the stack grows downwards, this is our initial stack value.
 
-```bash
+```c
 .vectors  : { KEEP(*(.vectors)) } > FLASH
   .text     : { *(.text*) }         > FLASH
   .rodata   : { *(.rodata*) }       > FLASH
@@ -187,7 +110,7 @@ This lines tell the linker to put vectors table on flash first, followed by text
 
 Next, we tell the linker the instructions for .data and .bss sections.
 
-```bash
+```c
 .data     : {
     _sdata = .; /* .data section start */
     *(.first_data)
@@ -205,7 +128,7 @@ Lastly, `_sidata = LOADARR(.data)` calculates the physical address in flash of t
 
 Lastly, for the .bss section:
 
-```bash
+```c
 .bss      : {
     _sbss = .;  /* .bss section start */
     *(.bss SORT(.bss.*) COMMON)
@@ -252,7 +175,6 @@ __attribute__((section(".vectors"))) void (*const tab[16 + 97])(void) = {
              /*  */
 };
 ```
-
 The compiler attributes naked and noreturn serve to instruct the compiler to: first, omit generating the PUSH and POP operations previous to the function, as when calling _reset, the SP just was initialized by hardware and is unsafe to use; and second, indicate that the execution will never leave this function (infinite loop), allowing the compiler to optimize code by removing the return instruction (BX LR).
 
 Next, we initialize the sections as required by architecture ARM Cortex-M. The .bss section is zero-filled, the .data section is block copied from Flash VMA to RAM LMA.
@@ -261,69 +183,183 @@ Lastly, we create the vector table, making sure that the first entry is the stac
 
 # Blinky
 
-After all this setup, we can finally begin to write our main function. First, I have used the provided libraries by ST Microelectronics, found in Inc/. Once this is done, we will write our own bare-metal library with custom structs, macros and bit handling functions.
+After all this setup, we can finally begin to write our main function. For this project we will write our own bare-metal library with custom structs, macros and bit handling functions.
+
+First, we begin by writing our own library handling the memory addresses. In a new `my_stm32f446xx.h` file, we begin to write some code.
+
+We know a couple of our needs:
+
+* RCC struct
+* GPIOx struct (one for each GPIO port A-H)
+* Base addresses for each struct
+* Pin handling functions (GPIO_write_pin for example)
+
+So, I begin writing a general code structure:
+
+```c
+#define __I volatile const /**< Defines read permission */
+#define __IO volatile      /**< Defines read / write permissions */
+#define __O volatile       /**< Defines write permission */
+
+typedef struct {
+
+} RCC_typedef;
+
+#define RCC_BASE 0x00000000
+
+#define RCC (RCC_typedef *)RCC_BASE
+
+typedef struct {
+
+} GPIO_typedef;
+
+#define GPIOA_BASE 0x00000000
+#define GPIOB_BASE 0x00000000
+#define GPIOC_BASE 0x00000000
+#define GPIOD_BASE 0x00000000
+#define GPIOE_BASE 0x00000000
+#define GPIOF_BASE 0x00000000
+#define GPIOG_BASE 0x00000000
+#define GPIOH_BASE 0x00000000
+
+#define GPIOA (GPIO_typedef *)GPIOA_BASE
+#define GPIOB (GPIO_typedef *)GPIOB_BASE
+#define GPIOC (GPIO_typedef *)GPIOC_BASE
+#define GPIOD (GPIO_typedef *)GPIOD_BASE
+#define GPIOE (GPIO_typedef *)GPIOE_BASE
+#define GPIOF (GPIO_typedef *)GPIOF_BASE
+#define GPIOG (GPIO_typedef *)GPIOG_BASE
+#define GPIOH (GPIO_typedef *)GPIOH_BASE
+```
 
 First, we need to know where the LED is located in the board. User Manual (UM1724) section 7.6 tells us: "User LD2: the green LED is a user LED connected to ARDUINO® signal D13 corresponding to STM32 I/O PA5 (pin 21)". Therefore, we know know that we need to access GPIO port A, pin 5.
 
-The following steps are:
- * Enabling the clock for this port.
- * Setting the initial state of the pin.
- * Defining its direction (Input or Output).
- * Configuring the output type (Push-Pull or Drain).
- * Configuring port output speed register (Unnecessary for this project).
- * Configuring pull-up/pull-down register (Unnecessary for this project).
+The steps for initializing a pin are:
 
-For the LD2 pin we write this code:
+- Enabling the clock for the port.
+- Setting the initial state of the pin.
+- Defining its direction (Input or Output).
+- Configuring the output type (Push-Pull or Drain).
+- Configuring port output speed register (Unnecessary for this project).
+- Configuring pull-up/pull-down register (Unnecessary for this project).
+
+
+
+Next, we need to fill the struct with all the registers indicated by the Reference Manual (RM0390). For example, this would be the RCC struct.
 ```c
-  RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Enable clock for PORT A
-  GPIOA->MODER &= ~GPIO_MODER_MODE5; // Clear mode bits
-  GPIOA->MODER |= GPIO_MODER_MODE5_0; // Activate bit 0, as 01 is output mode for moder
-  GPIOA->OTYPER &= ~GPIO_OTYPER_OT5; // Ensure port is in push-pull state instead of open drain
-  GPIOA->OSPEEDR &= ~GPIO_OSPEEDER_OSPEEDR5; // Clear speed bits to set starting low speed
+typedef struct {
+  __IO uint32_t CR;
+  __IO uint32_t PLLCFGR;
+  __IO uint32_t CFGR;
+  __IO uint32_t CIR;
+  __IO uint32_t AHB1RSTR;
+  __IO uint32_t AHB2RSTR;
+  __IO uint32_t AHB3RSTR;
+  uint32_t RESERVED0;
+  __IO uint32_t APB1RSTR;
+  __IO uint32_t APB2RSTR;
+  uint32_t RESERVED1[2];
+  __IO uint32_t AHB1ENR;
+  __IO uint32_t AHB2ENR;
+  __IO uint32_t AHB3ENR;
+  uint32_t RESERVED2;
+  __IO uint32_t APB1ENR;
+  __IO uint32_t APB2ENR;
+  uint32_t RESERVED3[2];
+  __IO uint32_t AHB1LPENR;
+  __IO uint32_t AHB2LPENR;
+  __IO uint32_t AHB3LPENR;
+  uint32_t RESERVED4;
+  __IO uint32_t APB1LPENR;
+  __IO uint32_t APB2LPENR;
+  uint32_t RESERVED5[2];
+  __IO uint32_t BDCR;
+  __IO uint32_t CSR;
+  uint32_t RESERVED6[2];
+  __IO uint32_t SSCGR;
+  __IO uint32_t RRC_PLLI2SCFGR;
+  __IO uint32_t RRC_PLLSAICFGR;
+  __IO uint32_t DCKCFGR;
+  __IO uint32_t CKGATENR;
+  __IO uint32_t DCKCFGR2;
+} RCC_typedef;
 ```
 
-Now, we can begin to write the main loop. The functionality is basic: toggle the register output value between 1 and 0, and between each toggle, delay the clock so the blink is noticeable.
+Once filled the structs, we need to map their macros to the corresponding memory addresses. We can get the memory addresses from Section 2.2.2 Table 1. STM32F446xx register boundary addresses:
+
+![Memory Addresses](assets/RCC_GPIO_mem.png)
 
 ```c
-while(1){
-  volatile uint32_t count = 1000000;
+#define PERIPH_BASE 0x40000000UL
 
-  GPIOA->ODR ^= GPIO_ODR_OD5;
+#define APB1PERIPH_BASE PERIPH_BASE
+#define APB2PERIPH_BASE (PERIPH_BASE + 0x00010000UL)
+#define AHB1PERIPH_BASE (PERIPH_BASE + 0x00020000UL)
+#define AHB2PERIPH_BASE (PERIPH_BASE + 0x10000000UL)
+#define AHB3PERIPH_BASE (PERIPH_BASE + 0x20000000UL)
 
-  while(count--) {} 
-}
+#define RCC_BASE (AHB1PERIPH_BASE + 0x00003800UL)
 
-return 0; // Needed because of main function 'int' signature
+#define GPIOA_BASE (AHB1PERIPH_BASE)
+#define GPIOB_BASE (AHB1PERIPH_BASE + 0x00000400UL)
+#define GPIOC_BASE (AHB1PERIPH_BASE + 0x00000800UL)
+#define GPIOD_BASE (AHB1PERIPH_BASE + 0x00000C00UL)
+#define GPIOE_BASE (AHB1PERIPH_BASE + 0x00001000UL)
+#define GPIOF_BASE (AHB1PERIPH_BASE + 0x00001400UL)
+#define GPIOG_BASE (AHB1PERIPH_BASE + 0x00001800UL)
+#define GPIOH_BASE (AHB1PERIPH_BASE + 0x00001C00UL)
 ```
 
-That's it! Our main program now compile without problems and when flashed to the board, the LED will blink.
+Next, we have to create macros for the bits for each corresponding register. We will follow the same pattern as the manufacturer, where we create a position macro, representing which bit in the register we are addressing, a mask macro, where we shift the value to its desired position in the register to clear bits without varying the others, and the base macro, to toggle a specific bit. For example:
 
-With the following Makefile grabbed from the guide repository:
-```bash
-CFLAGS  ?=  -W -Wall -Wextra -Werror -Wundef -Wshadow -Wdouble-promotion \
-            -Wformat-truncation -fno-common -Wconversion \
-            -g3 -Os -ffunction-sections -fdata-sections -IInc \
-            -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 $(EXTRA_CFLAGS)
+```c
+#define RCC_CR_HSEON_Pos        (16U)
+#define RCC_CR_HSEON_Msk        (0x1UL << RCC_CR_HSEON_Pos)
+#define RCC_CR_HSEON            RCC_CR_HSEON_Msk
 
-LDFLAGS ?= -TLinkerScript_STM32_NUCLEO-F446RE.ld -nostartfiles -nostdlib --specs nano.specs -lc -lgcc -Wl,--gc-sections -Wl,-Map=$@.map
-
-SOURCES = Src/main.c Src/startup.c
-
-all: firmware.bin
-
-build: firmware.elf
-
-firmware.elf: $(SOURCES)
-	arm-none-eabi-gcc $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $@
-
-firmware.bin: firmware.elf
-	arm-none-eabi-objcopy -O binary $< $@
-
-flash: firmware.bin
-	st-flash --reset write $< 0x08000000
+//For bigger bit fields we do as follows
+#define RCC_CR_HSITRIM_Pos      (3U)
+#define RCC_CR_HSITRIM_Msk      (0x1FUL << RCC_CR_HSITRIM_Pos)
+#define RCC_CR_HSITRIM          RCC_CR_HSITRIM_Msk
+#define RCC_CR_HSITRIM_0        (0x1UL << RCC_CR_HSITRIM_Pos)
+#define RCC_CR_HSITRIM_1        (0x2UL << RCC_CR_HSITRIM_Pos)
 ```
 
-And finally the Blinky is complete!
+This is a tedious and hard process, as we need to map all the registers needed for the project, and define macros for each bit. In this case, I have mapped all the registers and bits for RCC and GPIO peripherals. I will keep extending this header file in future projects. Once this is done, theoretically we could create our bare-metal main.c handling all the registers to blink the LED. 
+
+But let's take it a step further. We can get away from the hardware by creating a small Hardware Abstraction Layer, and abstract all the register handling into functions. For example, for the GPIO handling we create the following structure and functions:
+
+```c
+#define GPIO_PIN_MAX 15U
+
+typedef enum {
+  GPIO_PIN_RESET = 0U,              /**!< Pin is connected to GND */
+  GPIO_PIN_SET = 1U                 /**!< Pin is connected to VDD */
+} GPIO_PinState_t;
+
+typedef enum {
+  GPIO_MODE_INPUT = 0b00U,          /**!< Input (reset state) */
+  GPIO_MODE_OUTPUT = 0b01U,         /**!< General purpose output mode */
+  GPIO_MODE_ALT_FUNCTION = 0b10U,   /**!< Alternate function mode */
+  GPIO_MODE_ANALOG = 0b11U          /**!< Analog mode */ 
+} GPIO_Mode_t;
+
+void GPIO_SetMode(GPIO_typedef *port, uint8_t pin, GPIO_Mode_t mode);
+
+void GPIO_Write(GPIO_typedef *port, uint8_t pin, GPIO_PinState_t state);
+
+void GPIO_Toggle(GPIO_typedef *port, uint8_t pin);
+
+GPIO_PinState_t GPIO_Read(const GPIO_typedef *port, uint8_t pin);
+```
+
+This way, the user doesn't need to know the exact memory addresses to read the current value in port B, pin 5, they can just use the provided function.
+
+For this project, we will need to create a HAL for all the needed peripherals: GPIO, RCC and SysTick, which will be our timing control.
+
+And as a further abstraction, I have created a Board Support Package, to allow the user to just use the LED handling functions. This way, they do not have to worry about GPIO peripherals, RCC or flipping bits with logical operators, and instead they can just init and toggle the light.
+
+Lastly, I have implemented a Makefile rule for cppcheck to check for MISRA-C 2012 compliance within the project.
 
 ## References
 
@@ -331,13 +367,7 @@ This project was built from the ground up by studying microcontroller architectu
 
 *   **[STM32F446xx Reference Manual (RM0390)](https://www.st.com/resource/en/reference_manual/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf):** The ultimate source of truth for the microcontroller's memory map, boot configuration (Section 2.3), and GPIO register specifications.
 *   **[CMSIS Device Headers (STM32F4)](https://github.com/STMicroelectronics/cmsis-device-f4/tree/master/Include):** Official hardware abstraction headers (`stm32f446xx.h`) provided by STMicroelectronics, used to implement safe bitmasking (Read-Modify-Write patterns).
-*   **[Bare Metal Programming Guide by cpq](https://github.com/cpq/bare-metal-programming-guide):** An excellent and comprehensive repository detailing the bare-metal toolchain, linker scripts, and startup code fundamentals.
-*   **[Bare Metal Blink on STM32 by J. Chisholm](https://jchisholm204.github.io/posts/baremetal_blink/):** A practical tutorial that served as a reference for structuring the initial minimal bare-metal implementation.
+*   *[Bare Metal Programming Guide by cpq](https://github.com/cpq/bare-metal-programming-guide):** An excellent and comprehensive repository detailing the bare-metal toolchain, linker scripts, and startup code fundamentals.
+*   *[Bare Metal Blink on STM32 by J. Chisholm](https://jchisholm204.github.io/posts/baremetal_blink/):* A practical tutorial that served as a reference for structuring the initial minimal bare-metal implementation.
 *   **[ARM GCC Toolchain Documentation](https://gcc.gnu.org/onlinedocs/gcc/ARM-Options.html):** Used to understand compiler flags (`-ffunction-sections`, `-nostartfiles`, `-mfloat-abi`) and linker behavior for embedded systems.
-=======
-//For bigger bit fields we do as follows
 
-#define RCC_CR_HSITRIM_Pos      (3U)
-#define RCC_CR_HSITRIM_Msk      (0x1FUL << RCC_CR_HSITRIM_Pos)
-#define RCC_CR_HSITRIM          RCC_CR_HSITRIM_Msk
-```
